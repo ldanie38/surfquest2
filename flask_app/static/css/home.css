@@ -1,0 +1,110 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--body-font);
+    font-optical-sizing: auto;
+    font-weight: var(--body-font-weight);
+    font-style: normal;
+    display: flex;
+    flex-direction: column; /* Change to row to align items horizontally */
+    justify-content: flex-end; /* Align items to the right */
+    align-items: center;
+    height: 100vh;
+    background-image: url('../img/index_photo.jpg'); 
+    background-size: cover;
+    background-position: center;
+}
+
+header {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+footer {
+    margin-top: 10px;
+    text-align: center;
+}
+
+h1 {
+    font-family: var(--title-font);
+    font-weight: 400;
+    font-style: normal;
+    font-size: 3em; 
+}
+
+:root {
+    --title-font: "Bungee Spice", sans-serif;
+    --body-font: "Nunito", sans-serif;
+    --body-font-weight: 400; /* Default weight */
+}
+
+.form-container {
+    max-width: 400px;
+    padding: 20px;
+    border: none; /* Removed the border */
+    border-radius: 10px;
+    background-color: transparent; /* Keeping the background transparent */
+    text-align: center;
+    margin-left: 700px;
+}
+
+.form-container h2 {
+    font-family: var(--title-font);
+    text-align: center;
+}
+
+.form-container label {
+    display: block;
+    margin-bottom: 8px;
+    text-align: left; /* Aligns the label text to the left */
+}
+
+.form-container input[type="text"],
+.form-container input[type="email"],
+.form-container input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #FF6600; /* Changed to SurfQuest orange */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.form-container button:hover {
+    background-color: #FF6600;
+}
+
+.form-container p {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.form-container a {
+    color: #FF6600;
+    text-decoration: none;
+}
+
+.form-container a:hover {
+    text-decoration: underline; /* Add underline on hover for better visibility */
+}
