@@ -10,18 +10,13 @@ body {
     font-weight: var(--body-font-weight);
     font-style: normal;
     display: flex;
-    flex-direction: column; /* Change to row to align items horizontally */
-    justify-content:space-between; /* Align items to the right */
+    flex-direction:column; /* Change to row to align items horizontally */
+    justify-content:flex-start; /* Align items to the right */
     align-items: center;
     height: 100vh;
     background-image: url('../img/index_photo.jpg'); 
     background-size: cover;
     background-position: center;
-}
-
-footer {
-    margin-top: auto; /* Pushes the footer down to the bottom */
-    text-align: center;
 }
 
 header {
@@ -55,6 +50,7 @@ h1 {
     --body-font-weight: 400; /* Default weight */
 }
 
+
 .form-container {
     max-width: 400px;
     padding: 20px;
@@ -63,18 +59,22 @@ h1 {
     background-color: transparent; /* Keeping the background transparent */
     text-align: center;
     margin-left: 700px;
-}
+
+    }
+    
 
 .form-container h2 {
     font-family: var(--title-font);
     text-align: center;
 }
 
+
 .form-container label {
     display: block;
     margin-bottom: 8px;
     text-align: left; /* Aligns the label text to the left */
 }
+
 
 .form-container input[type="text"],
 .form-container input[type="email"],
@@ -106,12 +106,12 @@ h1 {
 }
 
 .form-container a {
-    color: #FF6600;
+    color:#FF6600;
     text-decoration: none;
 }
 
 .form-container a:hover {
-    text-decoration: underline; /* Add underline on hover for better visibility */
+    text-decoration:none;
 }
 
 ul {
@@ -120,7 +120,11 @@ ul {
     padding: 0;
   }
 
-
+  ul.nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
 
   a {
     text-decoration: none;
@@ -130,34 +134,5 @@ ul {
   a:hover {
     text-decoration: none;
   }
-  
 
-  .form-container a {
-    text-decoration: none;
-  }
-  
-  .form-container a:hover {
-    text-decoration: none;
-  }
 
-  nav ul {
-    list-style: none; /* Removes default bullets */
-    padding: 0;       /* Removes default padding */
-    margin: 0;        /* Removes default margin */
-    display: flex;    /* Make the <ul> a flex container */
-    flex-direction: row; /* Lay out the <li> items in a row */
-    gap: 20px;        /* Optional: adds space between items */
-  }
-  
-  nav ul li {
-    /* any additional styling for the list items */
-  }
-  
-  nav ul li a {
-    text-decoration: none; /* Remove underline from links */
-    /* Additional link styling if needed */
-  }
-  
-  
-  
-  

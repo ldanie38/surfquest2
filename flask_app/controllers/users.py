@@ -21,7 +21,8 @@ def login():
 
 @app.route('/home')
 def home():
-    return render_template('home.html')
+    username = session.get("username", None)
+    return render_template('home.html', username=username)
 
 @app.route('/register', methods=['POST'])
 def register():
@@ -77,10 +78,8 @@ def login_user():
         flash('Ivalid email/password !!!!')
         return redirect('/')
     session['user_id'] = user_in_db.id
-  # Store username in session
+  # ✅ Store username in session
 
-
-    
 
     return redirect ('/home')
     
