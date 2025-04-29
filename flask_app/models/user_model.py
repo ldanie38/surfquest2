@@ -53,3 +53,13 @@ class User:
         if len(results) < 1:
             return False
         return cls(results[0])
+    
+    @classmethod
+    def get_by_username(cls, data):
+        """Retrieve a user by username from the database."""
+        query = "SELECT * FROM users WHERE username = %(username)s LIMIT 1;"
+        results = connectToMySQL('project').query_db(query, data)
+        if len(results) < 1:
+            return False  # No user found with this username
+        return cls(results[0])  # Return the first matching user
+

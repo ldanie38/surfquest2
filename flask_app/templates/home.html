@@ -16,6 +16,11 @@
 <body>
     <header>
         <h1>SurfQuest</h1>
+        {% if username %}
+        <p>Welcome, {{ username }}! 🌊🏄‍♂️</p>
+    {% else %}
+        <p>Welcome to the Surf Blog! Login to share your stories.</p>
+    {% endif %}
         <nav>
             <ul>
                 <li><a href="#user-accounts">User Accounts</a></li>
@@ -23,47 +28,16 @@
                 <li><a href="#surf-spots">Surf Spots by Region</a></li>
                 <li><a href="#accommodation-links">Accommodation Links</a></li>
                 <li><a href="#additional-features">Additional Features</a></li>
-                <li><a href="#blog">Blog</a></li>
+                <li><a href="/blog">Blog</a></li>
                 <li><a href="#things-to-do">Things to Do and Places to Eat</a></li>
             </ul>
         </nav>
     </header>
     
-    <main>
-        <section id="user-accounts">
-            <h2>User Accounts</h2>
-            <p>Manage your account settings and preferences.</p>
-        </section>
+
+
         
-        <section id="surf-conditions">
-            <h2>Surf Conditions</h2>
-            <p>Check the latest surf conditions and forecasts.</p>
-        </section>
-        
-        <section id="surf-spots">
-            <h2>Surf Spots by Region</h2>
-            <p>Explore surf spots categorized by region.</p>
-        </section>
-        
-        <section id="accommodation-links">
-            <h2>Accommodation Links</h2>
-            <p>Find the best places to stay near your favorite surf spots.</p>
-        </section>
-        
-        <section id="additional-features">
-            <h2>Additional Features</h2>
-            <p>Discover more features to enhance your surfing experience.</p>
-        </section>
-        
-        <section id="blog">
-            <h2>Blog</h2>
-            <p>Read articles and updates from the SurfQuest community.</p>
-        </section>
-        
-        <section id="things-to-do">
-            <h2>Things to Do and Places to Eat</h2>
-            <p>Find activities and dining options near your surf spots.</p>
-        </section>
+
     </main>
     
     <footer>
