@@ -1,20 +1,23 @@
-from flask import render_template, request, redirect, session
+from flask import render_template, request, redirect, session, flash
 from flask_app import app
 from flask_app.models.blog import BlogPost
 from flask_app.models.user_model import User
 from datetime import datetime
-from flask import flash
 
 @app.route('/blog')
 def blog():
     """Display all blog posts with logged-in user."""
     posts = BlogPost.get_all()
-    
-    # Retrieve the logged-in user's username from session (if available)
+
+    # Convert the stored user ID to a username for display
+    # (Add a new attribute 'author_username' on each post)
+    for post in posts:
+        user = User.get_by_id({"id": post.author})
+        post.author_username = user.username if user else "Unknown"
+
+    # Retrieve the logged-in user's username from session
     username = session.get("username", None)
-
     return render_template('blog.html', posts=posts, username=username)
-
 
 @app.route('/blog/new')
 def new_blog():
@@ -26,7 +29,6 @@ def prevent_get():
     """Redirect if someone tries to access /blog/create via GET."""
     flash("Invalid request method.")
     return redirect('/blog/new')
-
 
 @app.route('/blog/create', methods=['POST'])
 def create_blog():
@@ -43,6 +45,7 @@ def create_blog():
         flash("Title and content cannot be empty.")
         return redirect('/blog/new')
 
+    # Store the user ID as the author (foreign key)
     data = {
         "title": title,
         "content": content,
@@ -52,7 +55,6 @@ def create_blog():
     BlogPost.save(data)
     return redirect('/blog')
 
-
 @app.route('/blog/<int:id>')
 def show_blog(id):
     """View a single blog post and handle missing posts."""
@@ -61,7 +63,10 @@ def show_blog(id):
 
     if not post:
         flash("Blog post not found.")
-        return redirect('/blog')  # Redirect to blog homepage or a custom 404 page
+        return redirect('/blog')
+
+    # Also convert the author ID to a username for display on the single-post page
+    user = User.get_by_id({"id": post.author})
+    post.author_username = user.username if user else "Unknown"
 
     return render_template('show_blog.html', post=post)
-

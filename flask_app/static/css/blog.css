@@ -5,18 +5,35 @@
 }
 
 body {
-    font-family: var(--body-font);
-    font-optical-sizing: auto;
-    font-weight: var(--body-font-weight);
-    font-style: normal;
+
     display: flex;
     flex-direction:column; /* Change to row to align items horizontally */
-    justify-content:flex-start; /* Align items to the right */
+    justify-content:space-between; /* Align items to the right */
     align-items: center;
+    gap:50px;
     height: 100vh;
     background-image: url('../img/index_photo.jpg'); 
     background-size: cover;
     background-position: center;
+}
+
+
+
+/* Override H1 with your desired styling */
+h1 {
+    font-family: "p22-typewriter", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 3em; /* or whatever you prefer */
+  }
+
+h2{
+    font-family: "p22-typewriter", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1.5em; /* or whatever you prefer */
+    white-space: nowrap;
+
 }
 
 header {
@@ -25,6 +42,7 @@ header {
 }
 
 main {
+    background-color: bisque;
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -32,17 +50,77 @@ main {
     align-items: center;
 }
 
+p{
+    font-family: "dico-typewriter", mono;
+    font-weight: 400;
+    font-style: normal;
+}
+.head{
+    background-color: #FF6600;
+}
+
+.blog_post {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center elements horizontally */
+    width: 50%; /* Adjust width for better readability */
+    margin: auto; /* Center the column */
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  label {
+    font-family: "dico-typewriter", mono;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1em; /* or whatever you prefer */
+    white-space: nowrap;
+  }
+  
+  input, textarea, button {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    font-family: "dico-typewriter", mono;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1em; 
+  }
+  
+  button {
+    background-color: #0077b6;
+    color: white;
+    font-size: 16px;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    
+  }
+  
+  button:hover {
+    background-color: #005f87;
+
+  }
+  
+
+.post_content{
+    background-color: #FF6600;
+    font-family: "dico-typewriter", mono;
+    font-weight: 400;
+    font-style: normal;
+
+}
+
 footer {
     margin-top: 10px;
     text-align: center;
 }
 
-h1 {
-    font-family: var(--title-font);
-    font-weight: 400;
-    font-style: normal;
-    font-size: 3em; 
-}
+
 
 :root {
     --title-font: "Bungee Spice", sans-serif;
@@ -86,33 +164,6 @@ h1 {
     border-radius: 5px;
 }
 
-.form-container button {
-    width: 100%;
-    padding: 10px;
-    background-color: #FF6600; /* Changed to SurfQuest orange */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.form-container button:hover {
-    background-color: #FF6600;
-}
-
-.form-container p {
-    text-align: center;
-    margin-top: 10px;
-}
-
-.form-container a {
-    color:#FF6600;
-    text-decoration: none;
-}
-
-.form-container a:hover {
-    text-decoration:none;
-}
 
 ul {
     list-style: none;
@@ -128,7 +179,7 @@ ul {
 
   a {
     text-decoration: none;
-    color:blue;
+    color:black;
   }
   
   a:hover {

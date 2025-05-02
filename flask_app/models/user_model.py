@@ -21,6 +21,16 @@ class User:
         results= connectToMySQL('project').query_db(query,data)
         return results
     
+    @classmethod
+    def get_by_id(cls, data):
+        """Retrieve a user by ID from the database."""
+        query = "SELECT * FROM users WHERE id = %(id)s LIMIT 1;"
+        results = connectToMySQL('project').query_db(query, data)
+        if len(results) < 1:
+            return False  # No user found with this ID
+        return cls(results[0])  # Return the first matching user
+
+    
 
 
     @staticmethod
