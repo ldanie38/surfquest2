@@ -7,6 +7,7 @@ class BlogPost:
         self.content = data['content']
         self.author = data['author']
         self.created_at = data['created_at']
+        self.likes = data['likes']
         
     db='project'
     
@@ -42,3 +43,9 @@ class BlogPost:
         if result and len(result) > 0:
             return result[0]['likes']
         return None
+    
+    @classmethod
+    def get_total_likes(cls):
+        query = "SELECT SUM(likes) AS total_likes FROM comments;"
+        result = connectToMySQL('project').query_db(query)
+        return result[0]['total_likes'] if result else 0

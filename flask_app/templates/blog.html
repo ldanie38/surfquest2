@@ -57,12 +57,13 @@
               <p>
                 <strong>By:</strong> {{ post.author_username }} | {{ post.created_at.strftime('%Y-%m-%d') }}
               </p>
-                  <!-- Like Button -->
               <p>
                 <button class="like-button" data-post-id="{{ post.id }}">
-                      ❤️ Like (<span class="like-count">{{ post.likes or 0 }}</span>)
+                  ❤️ Like (<span class="like-count">{{ post.likes or total_likes }}</span>)
                 </button>
               </p>
+              
+
             </article>
             <hr>
           {% endfor %}

@@ -9,6 +9,7 @@ from datetime import datetime
 def blog():
     """Display all blog posts with logged-in user."""
     posts = BlogPost.get_all()
+    total_likes = BlogPost.get_total_likes()  # Fetch total likes
 
     # Convert the stored user ID to a username for display
     # (Add a new attribute 'author_username' on each post)
@@ -18,7 +19,7 @@ def blog():
 
     # Retrieve the logged-in user's username from session
     username = session.get("username", None)
-    return render_template('blog.html', posts=posts, username=username)
+    return render_template('blog.html', posts=posts, username=username, total_likes=total_likes)
 
 @app.route('/blog/new')
 def new_blog():
