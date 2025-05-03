@@ -186,4 +186,17 @@ ul {
     text-decoration: none;
   }
 
+  .like-button {
+    background-color: transparent;
+    border: none;
+    color: #0077b6;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.like-button:hover {
+    color: #005f87;
+}
+
+
 

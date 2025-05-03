@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, session, flash
+from flask import render_template, request, redirect, session, flash, jsonify
 from flask_app import app
 from flask_app.models.blog import BlogPost
 from flask_app.models.user_model import User
@@ -70,3 +70,27 @@ def show_blog(id):
     post.author_username = user.username if user else "Unknown"
 
     return render_template('show_blog.html', post=post)
+
+@app.route('/like', methods=['POST'])
+def like_post():
+    data = request.get_json()
+    post_id = data.get('post_id')
+    
+    if not post_id:
+        return jsonify({'success': False}), 400
+    
+    # Increment the post's like count.
+    updated_like_count = BlogPost.increment_like(post_id)
+    if updated_like_count is not None:
+        return jsonify({'success': True, 'likes': updated_like_count})
+    else:
+        return jsonify({'success': False}), 500
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    
+    # Optionally, you can flash a message to confirm logout
+    flash("You have been logged out successfully.", "success")
+    
+    return redirect('/')

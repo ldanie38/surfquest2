@@ -27,3 +27,18 @@ class BlogPost:
         query = '''SELECT * FROM blog_posts WHERE id = %(id)s;'''
         results = connectToMySQL('project').query_db(query, data)
         return cls(results[0]) if results else None
+    
+    @classmethod
+    def increment_like(cls, post_id):
+        # Increment the like count
+        query = "UPDATE blog_posts SET likes = likes + 1 WHERE id = %(id)s;"
+        data = {"id": post_id}
+        connectToMySQL('project').query_db(query, data)
+        
+        # Retrieve the new like count
+        query = "SELECT likes FROM blog_posts WHERE id = %(id)s;"
+        result = connectToMySQL('project').query_db(query, data)
+        
+        if result and len(result) > 0:
+            return result[0]['likes']
+        return None

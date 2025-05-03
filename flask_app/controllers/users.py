@@ -64,22 +64,22 @@ def register():
 
     
 
-@app.route('/login_user',methods=["POST"])
+@app.route('/login_user', methods=["POST"])
 def login_user():
-        
-    user_in_db= User.get_by_email(request.form)
+    # Retrieve user from DB using the form data
+    user_in_db = User.get_by_email(request.form)
     
-
     if not user_in_db:
         flash('Invalid email/password')
         return redirect('/')
     
+    # Check if the password hash matches the form password
     if not bcrypt.check_password_hash(user_in_db.password, request.form['password']):
-        flash('Ivalid email/password !!!!')
+        flash('Invalid email/password')
         return redirect('/')
-    session['user_id'] = user_in_db.id
-  # ✅ Store username in session
-
-
-    return redirect ('/home')
     
+    # Set session variables for the logged in user
+    session['user_id'] = user_in_db.id
+    session['username'] = user_in_db.username  # Store the username from the DB
+    
+    return redirect('/home')

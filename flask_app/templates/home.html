@@ -3,7 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SurfQuest Home</title>
+        <!-- Favicon for most browsers -->
+        <link rel="icon" type="image/png" sizes="32x32" href="static/img/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="static/img/favicon-16x16.png">
+        <link rel="shortcut icon" href="/favicon.ico">
+        <!-- For Apple devices -->
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <!-- Theme color for Chrome, Firefox OS and Opera -->
+        <meta name="theme-color" content="#ffffff">
+
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap" rel="stylesheet">
@@ -18,7 +27,7 @@
     <header>
         <h1>SurfQuest</h1>
         {% if username %}
-        <p>Welcome, {{ username }}! 🌊🏄‍♂️</p>
+        <p>Welcome, {{ username|title }}! 🌊🏄‍♂️</p>
     {% else %}
         <p></p>
     {% endif %}
@@ -40,6 +49,9 @@
         
 
     </main>
+    <div>
+        <a href="/logout">Logout</a>
+    </div>
     
     <footer>
         <p>&copy; 2025 SurfQuest. All rights reserved.</p>

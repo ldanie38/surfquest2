@@ -6,13 +6,21 @@
   <title>Surf Blog</title>
   <link rel="stylesheet" href="/static/css/blog.css" />
   <link rel="stylesheet" href="https://use.typekit.net/gqv8jnv.css"> <!-- Adobe font-->
+        <!-- Favicon for most browsers -->
+        <link rel="icon" type="image/png" sizes="32x32" href="static/img/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="static/img/favicon-16x16.png">
+        <link rel="shortcut icon" href="/favicon.ico">
+        <!-- For Apple devices -->
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <!-- Theme color for Chrome, Firefox OS and Opera -->
+        <meta name="theme-color" content="#ffffff">
 </head>
 <body>
   <div class='head'>
     <header>
-      <h1>Surf Blog</h1>
+      <h1>SurfQuest Blog</h1>
       {% if username %}
-        <p>Welcome, {{ username }}! 🌊🏄‍♂️</p>
+        <p>Welcome, {{ username|title }}! 🌊🏄‍♂️</p>
       {% else %}
         <p>Welcome to the SurfQuest Blog!</p>
       {% endif %}
@@ -24,7 +32,7 @@
       <div class='blog_post'>
         {% if username %}
           <section id="create-post">
-            <h2>Share Your Surf Story 🏄‍♂️</h2>
+            <h2>Share Your Story 🏄‍♂️</h2>
             <form action="/blog/create" method="POST">
               <label for="title">Title:</label>
               <input type="text" id="title" name="title" required>
@@ -49,6 +57,12 @@
               <p>
                 <strong>By:</strong> {{ post.author_username }} | {{ post.created_at.strftime('%Y-%m-%d') }}
               </p>
+                  <!-- Like Button -->
+      <p>
+        <button class="like-button" data-post-id="{{ post.id }}">
+          ❤️ Like (<span class="like-count">{{ post.likes or 0 }}</span>)
+        </button>
+      </p>
             </article>
             <hr>
           {% endfor %}
@@ -65,5 +79,38 @@
   <footer>
     <p>Catch the latest waves 🌊</p>
   </footer>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const likeButtons = document.querySelectorAll('.like-button');
+      
+      likeButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+          const postId = this.dataset.postId;
+          const buttonElem = this;
+  
+          fetch('/like', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ post_id: postId })
+          })
+          .then(response => response.json())
+          .then(data => {
+            if(data.success) {
+              // Update the like count displayed in the button.
+              const likeCountSpan = buttonElem.querySelector('.like-count');
+              likeCountSpan.textContent = data.likes;
+            } else {
+              console.error('Failed to process like');
+            }
+          })
+          .catch(error => console.error('Error:', error));
+        });
+      });
+    });
+  </script>
+  
 </body>
 </html>
