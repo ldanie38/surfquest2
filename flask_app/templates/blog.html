@@ -58,11 +58,11 @@
                 <strong>By:</strong> {{ post.author_username }} | {{ post.created_at.strftime('%Y-%m-%d') }}
               </p>
                   <!-- Like Button -->
-      <p>
-        <button class="like-button" data-post-id="{{ post.id }}">
-          ❤️ Like (<span class="like-count">{{ post.likes or 0 }}</span>)
-        </button>
-      </p>
+              <p>
+                <button class="like-button" data-post-id="{{ post.id }}">
+                      ❤️ Like (<span class="like-count">{{ post.likes or 0 }}</span>)
+                </button>
+              </p>
             </article>
             <hr>
           {% endfor %}
@@ -79,13 +79,14 @@
   <footer>
     <p>Catch the latest waves 🌊</p>
   </footer>
-  
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       const likeButtons = document.querySelectorAll('.like-button');
-      
+  
       likeButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function(e) {
+          e.preventDefault();
+          
           const postId = this.dataset.postId;
           const buttonElem = this;
   
@@ -98,18 +99,31 @@
           })
           .then(response => response.json())
           .then(data => {
-            if(data.success) {
-              // Update the like count displayed in the button.
+            if (data.success) {
+              // Like was successful—update the like count and disable the button.
               const likeCountSpan = buttonElem.querySelector('.like-count');
-              likeCountSpan.textContent = data.likes;
+              if (likeCountSpan) {
+                likeCountSpan.textContent = data.likes;
+                // Optionally disable button to prevent further clicks.
+                buttonElem.disabled = true;
+              }
             } else {
-              console.error('Failed to process like');
+              // If not successful, maybe it was already liked. You can show a message.
+              console.log(data.message);
+              // Optionally disable the button if the post was already liked
+              if(data.liked){
+                buttonElem.disabled = true;
+              }
             }
           })
           .catch(error => console.error('Error:', error));
         });
       });
     });
+  </script>
+  
+
+
   </script>
   
 </body>
