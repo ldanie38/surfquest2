@@ -130,25 +130,26 @@
     });
 
 /* img rotation*/
-    document.addEventListener("DOMContentLoaded", function() {
-      const images = [
-          "static/img/drone_road_waves.jpg",
-          "static/img/surfer_on_wave.jpg",
-          "static/img/index.jpg",
-          "static/img/bad_ass.jpg"
+document.addEventListener("DOMContentLoaded", function() {
+  const images = [
+      "static/img/drone_road_waves.jpg",
+      "static/img/surfer_on_wave.jpg",
+      "static/img/index.jpg",
+      "static/img/bad_ass.jpg"
+  ];
 
-
-      ];
-      
-  
-      let index = 0;
-      function changeImage() {
+  let index = 0;
+  function changeImage() {
+      const imgElement = document.getElementById("surfImage");
+      if (imgElement) {
           index = (index + 1) % images.length;
-          document.getElementById("surfImage").src = images[index];
+          imgElement.src = images[index];
       }
-  
-      setInterval(changeImage, 5000); // Change every 3 seconds
-  });
+  }
+
+  setInterval(changeImage, 5000); // Change every 5 seconds
+});
+
   
   </script>
 
