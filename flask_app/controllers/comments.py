@@ -35,6 +35,9 @@ def add_comment(post_id):
     return redirect(f'/blog/{post_id}')
 
 
+
+
+
 @app.route('/comment/create', methods=['POST'])
 def create_comment():
     if 'user_id' not in session:
@@ -55,6 +58,10 @@ def create_comment():
     })
 
     return redirect(f'/blog/{post_id}')
+
+
+
+
 
 @app.route('/blog/<int:id>')
 def show_blog(id):

@@ -55,40 +55,50 @@
       </div>
 
       <div class="post_content">
-        <!-- Display Blog Posts -->
         <section id="blog-posts">
           {% for post in posts %}
-            <article>
-              <h2>{{ post.title }}</h2>
-              <p>{{ post.content }}</p>
-              <p>
-                <strong>By:</strong> {{ post.author_username }} | {{ post.created_at.strftime('%Y-%m-%d') }}
-              </p>
-              <p>
-                <button class="like-button" data-post-id="{{ post.id }}">
-                  ❤️ Like (<span class="like-count">{{ post.likes or total_likes }}</span>)
-                </button>
-              </p>
-              <p>
-                <button class="comment-button" data-post-id="{{ post.id }}">
-                    💬 Comment
-                </button>
-            </p>
-            <div id="comment-form-{{ post.id }}" class="comment-form" style="display: none;">
-                <form action="/comment/create" method="POST">
-                    <input type="hidden" name="post_id" value="{{ post.id }}">
-                    <textarea name="content" rows="3" placeholder="Write your comment..."></textarea>
-                    <button type="submit">Post Comment</button>
-                </form>
-            </div>
-
-            
-              
-
-            </article>
-            <hr>
+              <article>
+                  <h2>{{ post.title }}</h2>
+                  <p>{{ post.content }}</p>
+                  <p><strong>By:</strong> {{ post.author_username }} | {{ post.created_at.strftime('%Y-%m-%d') }}</p>
+      
+                  <!-- Like Button -->
+                  <p>
+                      <button class="like-button" data-post-id="{{ post.id }}">
+                          ❤️ Like (<span class="like-count">{{ post.likes or total_likes }}</span>)
+                      </button>
+                  </p>
+      
+                  <!-- Comment Toggle Button -->
+                  <p>
+                      <button class="comment-button" data-post-id="{{ post.id }}">
+                          💬 Comment
+                      </button>
+                  </p>
+      
+                  <!-- Display Comments Under Each Post -->
+                  <div class="comments-section">
+                      {% for comment in post_comments[post.id] %}
+                          <p><strong>{{ comment.user_id }}</strong>: {{ comment.content }}</p>
+                      {% endfor %}
+                  </div>
+      
+                  <!-- Comment Form for Each Post -->
+                  <div id="comment-form-{{ post.id }}" class="comment-form" style="display: none;">
+                      <form action="/comment/create" method="POST">
+                          <input type="hidden" name="post_id" value="{{ post.id }}">
+                          <label for="comment-content">Leave a comment:</label>
+                          <textarea id="comment-content" name="content" rows="3" placeholder="Write your comment..." required></textarea>
+                          <button type="submit">Post Comment</button>
+                      </form>
+                  </div>
+              </article>
+              <hr>
           {% endfor %}
-        </section>
+      </section>
+      
+
+     
       </div>
     </div>
   </div>
@@ -166,21 +176,20 @@ document.addEventListener("DOMContentLoaded", function() {
 
 /*comment section*/
 document.addEventListener("DOMContentLoaded", function() {
-  const commentButtons = document.querySelectorAll(".comment-button");
-
-  commentButtons.forEach(button => {
+  document.querySelectorAll(".comment-button").forEach(button => {
       button.addEventListener("click", function() {
           const postId = this.dataset.postId;
           const commentForm = document.getElementById(`comment-form-${postId}`);
 
           if (commentForm.style.display === "none") {
-              commentForm.style.display = "block"; // Show the form
+              commentForm.style.display = "block"; // Show form
           } else {
-              commentForm.style.display = "none"; // Hide the form
+              commentForm.style.display = "none"; // Hide form
           }
       });
   });
 });
+
 
 
 

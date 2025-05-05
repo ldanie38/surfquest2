@@ -6,21 +6,31 @@ from flask_app.models.user_model import User
 from flask_app.models.comment_model import Comment
 from datetime import datetime
 
+
+
 @app.route('/blog')
 def blog():
-    """Display all blog posts with logged-in user."""
-    posts = BlogPost.get_all()
+    """Display all blog posts with likes, comments, and logged-in user."""
+    
+    posts = BlogPost.get_all()  # Fetch all blog posts
     total_likes = BlogPost.get_total_likes()  # Fetch total likes
 
-    # Convert the stored user ID to a username for display
-    # (Add a new attribute 'author_username' on each post)
+    # Dictionary to store comments for each blog post
+    post_comments = {}
+
     for post in posts:
+        # Convert user ID to username for display
         user = User.get_by_id({"id": post.author})
         post.author_username = user.username if user else "Unknown"
 
-    # Retrieve the logged-in user's username from session
+        # Fetch comments for each blog post
+        post_comments[post.id] = Comment.get_by_post({"blog_post_id": post.id}) or []  # Ensures list, not None
+
+    # Retrieve logged-in user's username from session
     username = session.get("username", None)
-    return render_template('blog.html', posts=posts, username=username, total_likes=total_likes)
+
+    return render_template('blog.html', posts=posts, username=username, total_likes=total_likes, post_comments=post_comments)
+
 
 @app.route('/blog/new')
 def new_blog():
