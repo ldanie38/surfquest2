@@ -8,6 +8,7 @@ class BlogPost:
         self.author = data['author']
         self.created_at = data['created_at']
         self.likes = data['likes']
+        self.updated_at = data['updated_at']
         
     db='project'
     
@@ -46,6 +47,7 @@ class BlogPost:
     
     @classmethod
     def get_total_likes(cls):
-        query = "SELECT SUM(likes) AS total_likes FROM comments;"
+        query = "SELECT SUM(likes) AS total_likes FROM blog_posts;"
         result = connectToMySQL('project').query_db(query)
-        return result[0]['total_likes'] if result else 0
+        return result[0]['total_likes'] if result and result[0]['total_likes'] is not None else 0
+

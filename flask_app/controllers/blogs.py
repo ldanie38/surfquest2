@@ -3,6 +3,7 @@ from flask_app.config.mysqlconnection import connectToMySQL
 from flask_app import app
 from flask_app.models.blog import BlogPost
 from flask_app.models.user_model import User
+from flask_app.models.comment_model import Comment
 from datetime import datetime
 
 @app.route('/blog')
@@ -57,21 +58,7 @@ def create_blog():
     BlogPost.save(data)
     return redirect('/blog')
 
-@app.route('/blog/<int:id>')
-def show_blog(id):
-    """View a single blog post and handle missing posts."""
-    data = {"id": id}
-    post = BlogPost.get_by_id(data)
 
-    if not post:
-        flash("Blog post not found.")
-        return redirect('/blog')
-
-    # Also convert the author ID to a username for display on the single-post page
-    user = User.get_by_id({"id": post.author})
-    post.author_username = user.username if user else "Unknown"
-
-    return render_template('show_blog.html', post=post)
 
 @app.route('/like', methods=['POST'])
 def like_post():

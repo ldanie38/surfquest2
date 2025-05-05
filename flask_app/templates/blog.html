@@ -69,6 +69,20 @@
                   ❤️ Like (<span class="like-count">{{ post.likes or total_likes }}</span>)
                 </button>
               </p>
+              <p>
+                <button class="comment-button" data-post-id="{{ post.id }}">
+                    💬 Comment
+                </button>
+            </p>
+            <div id="comment-form-{{ post.id }}" class="comment-form" style="display: none;">
+                <form action="/comment/create" method="POST">
+                    <input type="hidden" name="post_id" value="{{ post.id }}">
+                    <textarea name="content" rows="3" placeholder="Write your comment..."></textarea>
+                    <button type="submit">Post Comment</button>
+                </form>
+            </div>
+
+            
               
 
             </article>
@@ -149,6 +163,26 @@ document.addEventListener("DOMContentLoaded", function() {
 
   setInterval(changeImage, 5000); // Change every 5 seconds
 });
+
+/*comment section*/
+document.addEventListener("DOMContentLoaded", function() {
+  const commentButtons = document.querySelectorAll(".comment-button");
+
+  commentButtons.forEach(button => {
+      button.addEventListener("click", function() {
+          const postId = this.dataset.postId;
+          const commentForm = document.getElementById(`comment-form-${postId}`);
+
+          if (commentForm.style.display === "none") {
+              commentForm.style.display = "block"; // Show the form
+          } else {
+              commentForm.style.display = "none"; // Hide the form
+          }
+      });
+  });
+});
+
+
 
   
   </script>
