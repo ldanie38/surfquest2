@@ -12,9 +12,25 @@ body {
     align-items: center;
     gap:50px;
     height: 100vh;
-    background-image: url('../img/index_photo.jpg'); 
-    background-size: cover;
-    background-position: center;
+    background-color: #f8f7ff;
+}
+
+.welcome{
+    font-size:larger;
+}
+
+.head{
+    background-color: #ebebeb;
+    width: 100%;
+    margin-bottom: 10px;
+    text-align: center;
+    
+}
+header {
+    margin-bottom: 10px;
+    text-align: center;
+    margin-bottom: 10px;
+    text-align: center;
 }
 
 
@@ -24,7 +40,8 @@ h1 {
     font-family: "p22-typewriter", sans-serif;
     font-weight: 400;
     font-style: normal;
-    font-size: 3em; /* or whatever you prefer */
+    font-size: 3em;
+    color:#212529; /* or whatever you prefer */
   }
 
 h2{
@@ -33,39 +50,86 @@ h2{
     font-style: normal;
     font-size: 1.5em; /* or whatever you prefer */
     white-space: nowrap;
+    color:#495057;
 
 }
 
-header {
-    margin-bottom: 10px;
-    text-align: center;
+
+
+.container{
+    display:flex;
+    flex-direction:row;
+    align-items: center;
+    background-color:#f5f3f4;
 }
 
-main {
-    background-color: bisque;
+.total_post {
+    
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    box-shadow: #005f87;
+   
+    
 }
+
+.img {
+    width: 800px; /* Fixed container width */
+    height: 400px; /* Same height as images */
+    overflow: hidden; /* Prevents content shifting */
+    margin-bottom: 500px;
+   
+}
+
+
+.img img {
+    width: 80%; /* Expands to the full container width */
+    max-width: 1000px;
+    height: 400px; /* Prevents it from getting too large */ /* Maintains aspect ratio */
+    object-fit: cover;
+    margin-left: 90px;
+
+  
+
+}
+
+
+
+
+
+
 
 p{
     font-family: "dico-typewriter", mono;
     font-weight: 400;
     font-style: normal;
 }
-.head{
-    background-color: #FF6600;
-}
+
 
 .blog_post {
     display: flex;
     flex-direction: column;
     align-items: center; /* Center elements horizontally */
     width: 50%; /* Adjust width for better readability */
-    margin: auto; /* Center the column */
+    margin-right: 300px;
+    
+    /* Center the column */
   }
+
+.post_content{
+    margin-right: 200px;
+   
+    font-family: "dico-typewriter", mono;
+    font-weight: 400;
+    font-style: normal;
+    margin-top: 50px;
+
+
+
+
+}
   
   form {
     display: flex;
@@ -79,6 +143,7 @@ p{
     font-style: normal;
     font-size: 1em; /* or whatever you prefer */
     white-space: nowrap;
+    color:#212529 ;
   }
   
   input, textarea, button {
@@ -92,28 +157,22 @@ p{
   }
   
   button {
-    background-color: #0077b6;
+    background-color: #778da9;
     color: white;
-    font-size: 16px;
+    font-size: 14px;
     border: none;
     padding: 10px;
     cursor: pointer;
+    border-radius: 5px;
     
   }
   
   button:hover {
-    background-color: #005f87;
+    background-color: #6096ba;
 
   }
   
 
-.post_content{
-    background-color: #FF6600;
-    font-family: "dico-typewriter", mono;
-    font-weight: 400;
-    font-style: normal;
-
-}
 
 footer {
     margin-top: 10px;
@@ -136,7 +195,7 @@ footer {
     border-radius: 10px;
     background-color: transparent; /* Keeping the background transparent */
     text-align: center;
-    margin-left: 700px;
+    margin-left: 500px;
 
     }
     
@@ -179,7 +238,7 @@ ul {
 
   a {
     text-decoration: none;
-    color:black;
+    color:#495057;
   }
   
   a:hover {
@@ -189,13 +248,13 @@ ul {
   .like-button {
     background-color: transparent;
     border: none;
-    color: #0077b6;
+    color:#ff5d8f;
     font-size: 1em;
     cursor: pointer;
 }
 
 .like-button:hover {
-    color: #005f87;
+    color:#778da9;
 }
 
 

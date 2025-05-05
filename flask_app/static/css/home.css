@@ -14,9 +14,8 @@ body {
     justify-content:space-between; /* Align items to the right */
     align-items: center;
     height: 100vh;
-    background-image: url('../img/index_photo.jpg'); 
-    background-size: cover;
-    background-position: center;
+    background-color:#f8f7ff ;
+
 }
 
 footer {
@@ -46,7 +45,8 @@ h1 {
     font-family: var(--title-font);
     font-weight: 400;
     font-style: normal;
-    font-size: 3em; 
+    font-size: 3em;
+    color: #495057; 
 }
 
 :root {
@@ -114,6 +114,10 @@ h1 {
     text-decoration: underline; /* Add underline on hover for better visibility */
 }
 
+p{
+    color:#495057;
+}
+
 ul {
     list-style: none;
     margin: 0;
@@ -124,7 +128,7 @@ ul {
 
   a {
     text-decoration: none;
-    color:blue;
+    color:#495057;
   }
   
   a:hover {
@@ -150,7 +154,7 @@ ul {
   }
   
   nav ul li {
-    color: black;
+    color:#495057;
     /* any additional styling for the list items */
   }
   
