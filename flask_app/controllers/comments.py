@@ -79,7 +79,7 @@ def show_blog(id):
     # Fetch all comments for this post, ensuring it's always a list
     comments = Comment.get_by_post({"blog_post_id": id}) or []
 
-    return render_template('show_blog.html', post=post, comments=comments)
+    return render_template('show_blog.html',post=post, comments=comments)
 
 
 

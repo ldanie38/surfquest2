@@ -62,19 +62,20 @@
                   <p>{{ post.content }}</p>
                   <p><strong>By:</strong> {{ post.author_username }} | {{ post.created_at.strftime('%Y-%m-%d') }}</p>
       
-                  <!-- Like Button -->
-                  <p>
-                      <button class="like-button" data-post-id="{{ post.id }}">
-                          ❤️ Like (<span class="like-count">{{ post.likes or total_likes }}</span>)
-                      </button>
-                  </p>
-      
-                  <!-- Comment Toggle Button -->
-                  <p>
-                      <button class="comment-button" data-post-id="{{ post.id }}">
-                          💬 Comment
-                      </button>
-                  </p>
+  <!-- Like Button -->
+  <p>
+    <button class="like-button" data-post-id="{{ post.id }}">
+        ❤️ Like (<span class="like-count">{{ post.likes }}</span>)
+    </button>
+  </p>
+
+  <!-- Comment Button -->
+  <p>
+    <button class="comment-button" data-post-id="{{ post.id }}">
+        💬 Comment
+    </button>
+  </p>
+
       
                   <!-- Display Comments Under Each Post -->
                   <div class="comments-section">
