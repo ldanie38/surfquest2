@@ -22,18 +22,27 @@ class Comment:
         return connectToMySQL("project").query_db(query, data)
 
 
-
     @classmethod
     def get_by_post(cls, data):
-        query = "SELECT * FROM comments WHERE blog_post_id = %(blog_post_id)s ORDER BY created_at ASC;"
-        results = connectToMySQL('project').query_db(query, data)
+            query = """
+            SELECT comments.*, users.username 
+            FROM comments
+            JOIN users ON comments.user_id = users.id
+            WHERE blog_post_id = %(blog_post_id)s
+            ORDER BY comments.created_at ASC;
+            """
+            results = connectToMySQL('project').query_db(query, data)
 
-        if not results:  
-            return []  # Ensures an empty list instead of None
-        
-        comments = [cls(row) for row in results]  # List comprehension for cleaner code
+            if not results:
+                return []
 
-        return comments
+            comments = []
+            for row in results:
+                comment = cls(row)
+                comment.username = row['username']  # Attach username from joined query
+                comments.append(comment)
+
+            return comments
     
     ##return a comment
     @classmethod
