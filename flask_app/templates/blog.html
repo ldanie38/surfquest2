@@ -10,7 +10,10 @@
 </head>
 <body>
     <header>
-        <h1>SurfQuest Blog</h1>
+        <div class='head'>
+            <h1>SurfQuest Blog</h1>
+        </div>
+        
         {% if username %}
             <p class="welcome">Welcome, {{ username|title }}!</p>
         {% else %}
@@ -19,10 +22,11 @@
     </header>
 
     <div class="container">
-        <section id="create-post">
+        <section class="create_post">
             {% if username %}
-                <h2>Share Your Story</h2>
+                
                 <form action="/blog/create" method="POST">
+                    <h2>Share Your Story</h2>
                     <label for="title">Title:</label>
                     <input type="text" id="title" name="title" required>
 
@@ -32,18 +36,30 @@
                     <button type="submit">Publish</button>
                 </form>
             {% endif %}
+            <div class="create_post_image">
+                <img id="surfImage" src="/static/img/bad_ass.jpg" alt="Surfboard on the beach">
+            </div>
+            <div class='logout'>
+                <a href="/home">Back to Home</a> | 
+                <a href="/logout">Logout</a>
+            </div>
+            
+
         </section>
 
         <hr>
 
-        <section id="blog-posts">
+        <section class="blog_post">
             {% for post in posts %}
                 <article>
-                    <h2>{{ post.title }}</h2>
-                    <p>{{ post.content }}</p>
-                    <p><strong>By:</strong> {{ post.author_username }} | {{ post.created_at.strftime('%Y-%m-%d') }}</p>
+                    <div class='post_show'>
+                        <h2>{{ post.title }}</h2>
+                        <p>{{ post.content }}</p>
+                        <p><strong>By:</strong> {{ post.author_username }} | {{ post.created_at.strftime('%Y-%m-%d') }}</p>
+                    </div>
 
-                    <!-- Like Button -->
+                    <div class='likes_comment'>
+                                            <!-- Like Button -->
                     <p>
                         <button class="like-button" data-post-id="{{ post.id }}">
                             ❤️ Like (<span class="like-count">{{ post.likes }}</span>)
@@ -56,6 +72,9 @@
                             💬 Comment
                         </button>
                     </p>
+
+                    </div>
+
 
                     <!-- Comments Section -->
                     <div id="comments-container-{{ post.id }}" style="display: none;">
@@ -80,8 +99,6 @@
     </div>
 
     <footer>
-        <a href="/home">Back to Home</a> | 
-        <a href="/logout">Logout</a>
         <p>Catch the latest waves 🌊</p>
     </footer>
 

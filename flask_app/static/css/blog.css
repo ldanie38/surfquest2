@@ -18,35 +18,36 @@ body {
 
 .welcome{
     font-size:larger;
+    font-family: "avenir-next-lt-pro", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
-.head{
-    background-color: #f8f9fa;
-    width: 100%;
-    margin-bottom: 10px;
-    text-align: center;
-    
-}
+
 header {
+    background-color: #f8f9fa;
     margin-bottom: 10px;
     text-align: center;
     margin-bottom: 10px;
     text-align: center;
+    width: 100%;
+    padding:5px;
+
 }
 
 
 
 /* Override H1 with your desired styling */
 h1 {
-    font-family: "p22-typewriter", sans-serif;
-    font-weight: 400;
-    font-style: normal;
+    font-family: "avenir-next-lt-pro", sans-serif;
+    font-weight: 900;
+    font-style: italic;
     font-size: 3em;
     color:#212529; 
   }
 
 h2{
-    font-family: "p22-typewriter", sans-serif;
+    font-family: "avenir-next-lt-pro", sans-serif;
     font-weight: 400;
     font-style: normal;
     font-size: 1.5em; /* or whatever you prefer */
@@ -60,49 +61,12 @@ h2{
 .container{
     display:flex;
     flex-direction:row;
-    align-items: center;
+    align-items:center;
     background-color:#f8f9fa;
-    
-    
-}
-
-.total_post {
-    
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    box-shadow: #005f87;
+    width:60%;
    
     
 }
-
-.img {
-    width: 800px; /* Fixed container width */
-    height: 400px; /* Same height as images */
-    overflow: hidden; /* Prevents content shifting */
-    margin-bottom: 500px;
-   
-}
-
-
-.img img {
-    width: 80%; /* Expands to the full container width */
-    max-width: 1000px;
-    height: 400px; /* Prevents it from getting too large */ /* Maintains aspect ratio */
-    object-fit: cover;
-    margin-left: 90px;
-
-  
-
-}
-
-
-
-
-
-
 
 p{
     font-family: "dico-typewriter", mono;
@@ -110,29 +74,75 @@ p{
     font-style: normal;
 }
 
+.create_post {
+    align-self: flex-start;
+    flex-grow: 2;
+    width: 90%; 
+    max-width: 800px;
+    background-color: #f8f9fa;
+    padding: 15px;
+    position: relative; /* Keeps it inside the normal flow */
+    z-index: 10; /* Keeps it above comments */
+    
+
+}
+
+.create_post form {
+    width: 100%; /* Makes form take full width of .create_post */
+    max-width: 750px;
+    margin-left: 90px; /* Controls max size */
+}
+.create_post_image {
+    text-align: center; /* Centers the image */
+    margin-top: 15px; /* Adds space below the form */
+   
+}
+
+.create_post_image img {
+    width: 1000%; /* Makes it smaller while staying responsive */
+    max-width: 400px; /* Prevents it from being too large */
+    height: auto; /* Maintains aspect ratio */
+    border-radius: 10px; /* Smooth corners for a clean look */
+    display: block;
+    margin: 0 auto;
+    margin-top: 80px; /* Centers the image horizontally */
+    margin-left:17px;
+    object-fit: cover;
+   transition: opacity 0.5s ease-in-out;
+}
+
 
 .blog_post {
     display: flex;
     flex-direction: column;
     align-items: center; /* Center elements horizontally */
-    width: 50%; /* Adjust width for better readability */
+    width: 100%; /* Adjust width for better readability */
     margin-right: 300px;
+  
+    margin-left: 160px;
+   
     
     /* Center the column */
   }
 
-.post_content{
+.post_show{
+    background-color:#e7ecef;
+    width: 300px;
+  
     margin-right: 200px;
-   
-    font-family: "dico-typewriter", mono;
-    font-weight: 400;
-    font-style: normal;
-    margin-top: 50px;
-
-
-
-
+    padding: 20px;
 }
+
+.likes_comment{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+   padding: 5px;
+}
+
+
+
+
   
   form {
     display: flex;
@@ -141,7 +151,7 @@ p{
   }
   
   label {
-    font-family: "dico-typewriter", mono;
+    font-family: "avenir-next-lt-pro", sans-serif;
     font-weight: 400;
     font-style: normal;
     font-size: 1em; /* or whatever you prefer */
@@ -159,7 +169,7 @@ p{
     font-size: 1em; 
   }
 
-  .blog_post button{
+  .create_post button{
     background-color:#778da9;
     color:#f8f9fa;
     font-size: 14px;
@@ -181,7 +191,7 @@ p{
 
   }
   
-  .post_content button {
+  .blog_post button {
     background-color:transparent;
     color:#212529;
     font-size: 14px;
@@ -207,6 +217,11 @@ p{
   .like-button:hover {
     background-color:white;
     
+  }
+
+  .logout{
+    margin-left:20px;
+    margin-top: 8px;
   }
   
 

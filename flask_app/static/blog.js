@@ -121,3 +121,37 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
+/* img rotation*/
+document.addEventListener("DOMContentLoaded", function() {
+    const images = [
+        "static/img/bad_ass.jpg",
+        "static/img/drone_road_waves.jpg",
+        "static/img/surfer_on_wave.jpg",
+        "static/img/index.jpg",
+        "static/img/dreamy_surfing.jpg",
+        "static/img/trees.jpg",
+        "static/img/looks_like_whitches.jpg",
+        "static/img/chica.jpg",
+        "static/img/so_pretty.jpg",
+        "static/img/suffing.jpg",
+        "static/img/whitches_rock.jpg",
+        "static/img/tarzan.jpg",
+        "static/img/boat_surf.jpg",
+        "static/img/crock.jpg",
+        "static/img/yahoo.jpg",
+        "static/img/day.jpg",
+
+    ];
+  
+    let index = 0;
+    function changeImage() {
+        const imgElement = document.getElementById("surfImage");
+        if (imgElement) {
+            index = (index + 1) % images.length;
+            imgElement.src = images[index];
+        }
+    }
+  
+    setInterval(changeImage, 3000); // Change every 5 seconds
+  });
+
