@@ -44,25 +44,8 @@ class Comment:
 
             return comments
     
-    ##return a comment
-    @classmethod
-    def save(cls, data):
-        query = """
-        INSERT INTO comments (content, user_id, blog_post_id)
-        VALUES (%(content)s, %(user_id)s, %(blog_post_id)s);
-        """
-        return connectToMySQL('project').query_db(query, data)  # Returns inserted ID
-    
-    ## handle no response
-    @classmethod
-    def get_by_post(cls, data):
-        query = "SELECT * FROM comments WHERE blog_post_id = %(blog_post_id)s ORDER BY created_at ASC;"
-        results = connectToMySQL('project').query_db(query, data)
 
-        if not results:
-            return []  # Prevents returning None
 
-        return [cls(row) for row in results]  # Uses list comprehension for cleaner code
 
     
 
