@@ -1,26 +1,5 @@
 
 
-    // Like Button Handler
-    document.querySelectorAll(".like-button").forEach(button => {
-        button.addEventListener("click", async function() {
-            const postId = this.dataset.postId;
-            const response = await fetch("/like", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ post_id: postId })
-            });
-
-            const data = await response.json();
-            if (data.success) {
-                this.querySelector(".like-count").textContent = data.likes;
-                this.disabled = true;
-            } else {
-                console.log(data.message);
-            }
-        });
-    });
-
-
 document.addEventListener("DOMContentLoaded", function() {
     // Like Button Handler
     document.querySelectorAll(".like-button").forEach(button => {
