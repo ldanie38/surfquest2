@@ -108,7 +108,8 @@ p{
     margin-top: 80px; /* Centers the image horizontally */
     margin-left:47px;
     object-fit: cover;
-   transition: opacity 0.5s ease-in-out;
+    transition: opacity 4s ease; /* Transition now takes 2 seconds */
+    opacity: 1;
 }
 
 

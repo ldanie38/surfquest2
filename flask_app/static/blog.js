@@ -144,15 +144,27 @@ document.addEventListener("DOMContentLoaded", function() {
     ];
   
     let index = 0;
+    
     function changeImage() {
         const imgElement = document.getElementById("surfImage");
         if (imgElement) {
-            index = (index + 1) % images.length;
-            imgElement.src = images[index];
+            // Fade out
+            imgElement.style.opacity = 0;
+            
+            // After the fade out, change the image and fade back in
+            setTimeout(() => {
+                index = (index + 1) % images.length;
+                imgElement.src = images[index];
+                
+                // When the new image has loaded, fade in
+                imgElement.onload = () => {
+                    imgElement.style.opacity = 1;
+                };
+            }, 2000); // Wait 1 second which matches the CSS transition duration
         }
     }
   
-    setInterval(changeImage, 3000); // Change every 5 seconds
+    setInterval(changeImage, 8000); // Change every 5 seconds
   });
 
     // Show or hide the "Back to Top" button based on scroll position
