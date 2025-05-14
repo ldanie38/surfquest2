@@ -13,12 +13,6 @@
         <div class='head'>
             <h1>SurfQuest Blog</h1>
         </div>
-        
-        {% if username %}
-            <p class="welcome">Welcome, {{ username|title }}</p>
-        {% else %}
-            <p>Welcome to the SurfQuest Blog!</p>
-        {% endif %}
     </header>
 
     <div class="container">
@@ -26,14 +20,18 @@
             {% if username %}
                 
                 <form action="/blog/create" method="POST">
-                    <h3>Share Your Story</h3>
-                    <label for="title">Title:</label>
+                    {% if username %}
+                    <p class="welcome"><h3> Share Your Story {{ username|title }}</h3></p>
+                {% else %}
+                    <p>Welcome to the SurfQuest Blog!</p>
+                {% endif %}
+                    <label for="title">Big Kahuna:</label>
                     <input type="text" id="title" name="title" required>
 
-                    <label for="content">Content:</label>
+                    <label for="content">Swell Details:</label>
                     <textarea id="content" name="content" rows="5" required maxlength="5000"></textarea>
 
-                    <button type="submit">Publish</button>
+                    <button type="submit">DropIn</button>
                 </form>
             {% endif %}
             <div class="create_post_image">

@@ -177,6 +177,10 @@ p{
     font-size: 1em; 
   }
 
+  label, input, button{
+    margin-top: 10px;
+  }
+
   .create_post button{
     background-color:#778da9;
     color:#f8f9fa;
