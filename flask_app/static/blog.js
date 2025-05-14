@@ -155,3 +155,19 @@ document.addEventListener("DOMContentLoaded", function() {
     setInterval(changeImage, 3000); // Change every 5 seconds
   });
 
+    // Show or hide the "Back to Top" button based on scroll position
+    window.addEventListener('scroll', function() {
+        const backToTop = document.getElementById('backToTop');
+        if (window.pageYOffset > 100) { // Change this value if needed
+            backToTop.style.display = 'block';
+        } else {
+            backToTop.style.display = 'none';
+        }
+    });
+  
+    // Scroll smoothly to the top when the button is clicked
+    document.getElementById("backToTop").addEventListener("click", function(e) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+

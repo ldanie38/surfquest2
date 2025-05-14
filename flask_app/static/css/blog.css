@@ -46,7 +46,7 @@ h1 {
     color:#212529; 
   }
 
-h2{
+h3{
     font-family: "avenir-next-lt-pro", sans-serif;
     font-weight: 400;
     font-style: normal;
@@ -80,7 +80,7 @@ p{
     width: 90%; 
     max-width: 800px;
     background-color: #f8f9fa;
-    padding: 15px;
+    padding: 20px;
     position: relative; /* Keeps it inside the normal flow */
     z-index: 10; /* Keeps it above comments */
     
@@ -304,6 +304,27 @@ ul {
     cursor: pointer;
 }
 
+.back-to-top {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    display: none; /* Hidden by default */
+    background-color: #333;
+    color: #fff;
+    padding: 10px 15px;
+    font-size: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1000;
+    text-align: center;
+    line-height: 1;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    transition: opacity 0.3s, background-color 0.3s;
+}
+
+.back-to-top:hover {
+    background-color: #555;
+}
 
 
 
