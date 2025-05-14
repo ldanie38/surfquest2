@@ -127,10 +127,19 @@ p{
 .post_show{
     background-color:#e7ecef;
     width: 300px;
-  
     margin-right: 200px;
     padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Creates the 3D shadow effect */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transform: perspective(1000px) translateZ(0);
 }
+
+.post_show:hover {
+    transform: perspective(1000px) translateZ(10px) rotateX(2deg) rotateY(2deg);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
+  }
 
 .likes_comment{
     display: flex;
