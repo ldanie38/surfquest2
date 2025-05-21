@@ -5,26 +5,61 @@ from flask_app.models.blog import BlogPost
 from flask_app.models.user_model import User
 
 
+def nest_comments(comments):
+    """
+    Given a flat list of comment objects, rearrange them so that each comment
+    includes a .children attribute with its replies.
+    """
+    #  a map of comment IDs to comment objects.
+    comment_map = {}
+    for comment in comments:
+        comment.children = []  # initialize the children list
+        comment_map[comment.id] = comment
+
+    nested = []
+    for comment in comments:
+        if comment.parent_comment_id:  # It's a reply.
+            parent = comment_map.get(comment.parent_comment_id)
+            if parent:
+                parent.children.append(comment)
+        else:
+            # If there's no parent, it's a top-level comment.
+            nested.append(comment)
+    return nested
+
+
+
 
 # Route to handle comment submissions on anyone's post.
 @app.route('/blog/<int:post_id>/comment', methods=['POST'])
 def add_comment(post_id):
+    ## Ensure user is logged in
     if 'user_id' not in session:
         return jsonify({'success': False, 'message': 'You must be logged in to comment.'}), 403
 
+    # Get comment content & parent_comment_id (if it's a reply)
     content = request.form.get("content", "").strip()
+    parent_comment_id = request.form.get("parent_comment_id")  # New field for replies
+
     if not content:
         return jsonify({'success': False, 'message': 'Comment cannot be empty.'}), 400
 
     data = {
         "content": content,
         "user_id": session["user_id"],
-        "blog_post_id": post_id
+        "blog_post_id": post_id,
+        "parent_comment_id": parent_comment_id if parent_comment_id else None  # Store parent ID if it's a reply
     }
 
-    Comment.save(data)
+    Comment.save(data)  # Save comment with parent_id
 
-    return jsonify({'success': True, 'content': content, 'username': session.get('username', 'Unknown')})
+    return jsonify({
+        'success': True,
+        'content': content,
+        'username': session.get('username', 'Unknown'),
+        'parent_comment_id': parent_comment_id
+    })
+
 
 
 

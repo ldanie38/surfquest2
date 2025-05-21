@@ -162,3 +162,18 @@ document.addEventListener("DOMContentLoaded", function() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
+    //nested comments//
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".reply-button").forEach(btn => {
+            btn.addEventListener("click", function() {
+                const commentId = this.dataset.commentId;
+                const form = document.getElementById(`reply-form-${commentId}`);
+                if (form) {
+                    form.style.display = form.style.display === "none" ? "block" : "none";
+                }
+            });
+        });
+    });
+    
+
+    
