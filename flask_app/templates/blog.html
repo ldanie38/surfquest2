@@ -11,29 +11,34 @@
 <body>
   {# Define the macro to recursively render nested comments, with "post" passed in #}
   {% macro render_comments(comments, post) %}
-    <ul>
-      {% for comment in comments %}
-        <li>
-          <p><strong>{{ comment.username }}</strong>: {{ comment.content }}</p>
-          <!-- Optional button to reply to this comment -->
-          <button class="reply-button" data-comment-id="{{ comment.id }}">Reply</button>
-          
-          <!-- Render a reply form -->
-          <div class="reply-form" id="reply-form-{{ comment.id }}" style="display: none;">
-            <form class="comment-form" data-parent-id="{{ comment.id }}" action="/blog/{{ post.id }}/comment" method="POST">
-              <textarea name="content" rows="2" placeholder="Your reply..." required></textarea>
-              <button type="submit">Submit Reply</button>
-            </form>
-          </div>
-          
-          {# Recursively render any children comments, passing the same post object #}
+  <ul>
+    {% for comment in comments %}
+      <li>
+        <p><strong>{{ comment.username }}</strong>: {{ comment.content }}</p>
+        <!-- Optional button to reply to this comment -->
+        <button class="reply-button" data-comment-id="{{ comment.id }}">Reply</button>
+        
+        <!-- Render the reply form -->
+        <div class="reply-form-container" id="reply-form-{{ comment.id }}" style="display: none;">
+          <form class="reply-form" data-parent-comment-id="{{ comment.id }}" action="/blog/{{ post.id }}/comment" method="POST">
+            <!-- Hidden input so that the JS can retrieve the post id -->
+            <input type="hidden" name="post_id" value="{{ post.id }}">
+            <textarea name="content" rows="2" placeholder="Your reply..." required></textarea>
+            <button type="submit">Submit Reply</button>
+          </form>
+        </div>
+        
+        <!-- Container for dynamically inserted nested replies -->
+        <div id="replies-container-{{ comment.id }}">
           {% if comment.children %}
             {{ render_comments(comment.children, post) }}
           {% endif %}
-        </li>
-      {% endfor %}
-    </ul>
-  {% endmacro %}
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+{% endmacro %}
+
 
   <header>
     <div class="head">
@@ -100,7 +105,7 @@
               {{ render_comments(post_comments[post.id], post) }}
             </div>
             <!-- Comment Form -->
-            <div id="comment-form-{{ post.id }}" class="comment-form" style="display: none;">
+            <div id="comment-form-{{ post.id }}" class="comment-form-container" style="display: none;">
               <form class="comment-form" data-post-id="{{ post.id }}" action="/blog/{{ post.id }}/comment" method="POST">
                 <input type="hidden" name="post_id" value="{{ post.id }}">
                 <label for="comment-content-{{ post.id }}"></label>

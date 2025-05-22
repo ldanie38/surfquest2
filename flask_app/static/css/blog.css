@@ -168,7 +168,7 @@ p{
     color:#212529 ;
   }
   
-  input, textarea {
+  input, textarea,.reply-form {
     width: 100%;
     padding: 8px;
     margin-top: 5px;
@@ -220,6 +220,11 @@ p{
     font-style: normal;
     font-size: 1em; 
     
+  }
+
+  .reply-form{
+
+
   }
   
   button:hover {
