@@ -3,26 +3,35 @@ document.addEventListener("DOMContentLoaded", function() {
     // Like Button Handler
     // ===================
     document.querySelectorAll(".like-button").forEach(button => {
-      button.addEventListener("click", async function() {
-        const postId = this.dataset.postId;
-        try {
-          const response = await fetch("/like", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ post_id: postId })
-          });
-          const data = await response.json();
-          if (data.success) {
-            this.querySelector(".like-count").textContent = data.likes;
-            this.disabled = true;
-          } else {
-            console.log(data.message);
+      button.addEventListener("click", async function () {
+          const postId = this.dataset.postId;
+          try {
+              const response = await fetch("/like", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ post_id: postId })
+              });
+  
+              const data = await response.json();
+  
+              if (data.success) {
+                  // Update the like button text based on whether the post is now liked
+                  if (data.liked) {
+                      // Post is now liked — show "Unlike"
+                      this.innerHTML = `❤️ Unlike (<span class="like-count">${data.likes}</span>)`;
+                  } else {
+                      // Post is now unliked — show "Like"
+                      this.innerHTML = `❤️ Like (<span class="like-count">${data.likes}</span>)`;
+                  }
+              } else {
+                  console.error("Error processing like: ", data.message);
+              }
+          } catch (error) {
+              console.error("AJAX error processing like/unlike: ", error);
           }
-        } catch (error) {
-          console.error("Error liking post:", error);
-        }
       });
-    });
+  });
+  
   
     // =====================
     // Comment Button Toggle

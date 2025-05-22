@@ -51,3 +51,19 @@ class BlogPost:
         result = connectToMySQL('project').query_db(query)
         return result[0]['total_likes'] if result and result[0]['total_likes'] is not None else 0
 
+    @classmethod
+    def has_user_liked(cls, data):
+        """
+        Check if a user has already liked a post.
+        
+        Expects a data dictionary in the following format:
+          {
+            'user_id': <user_id>,
+            'post_id': <post_id>
+          }
+          
+        Returns True if the user has liked the post, otherwise False.
+        """
+        query = "SELECT * FROM post_likes WHERE user_id = %(user_id)s AND post_id = %(post_id)s;"
+        result = connectToMySQL(cls.db).query_db(query, data)
+        return True if result and len(result) > 0 else False

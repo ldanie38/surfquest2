@@ -70,9 +70,11 @@ def create_blog():
 
 
 
+
+
 @app.route('/like', methods=['POST'])
 def like_post():
-    # Ensure the user is logged in
+    # Ensure the user is logged in.
     if 'user_id' not in session:
         return jsonify({'success': False, 'message': 'Please log in.'}), 403
 
@@ -83,37 +85,54 @@ def like_post():
     if not post_id:
         return jsonify({'success': False, 'message': 'No post provided'}), 400
 
+    check_data = {'user_id': user_id, 'post_id': post_id}
+    
     # Check whether the user has already liked this post.
     query = "SELECT * FROM post_likes WHERE user_id = %(user_id)s AND post_id = %(post_id)s;"
-    check_data = {'user_id': user_id, 'post_id': post_id}
     result = connectToMySQL('project').query_db(query, check_data)
 
     if result and len(result) > 0:
-        # Already liked—fetch the current like count and return without updating.
+        # Already liked—so unlike the post.
+        # Decrement the like count.
+        query = "UPDATE blog_posts SET likes = likes - 1 WHERE id = %(post_id)s;"
+        connectToMySQL('project').query_db(query, {'post_id': post_id})
+        
+        # Remove the like record.
+        query = "DELETE FROM post_likes WHERE user_id = %(user_id)s AND post_id = %(post_id)s;"
+        connectToMySQL('project').query_db(query, check_data)
+        
+        # Retrieve the updated like count.
         query = "SELECT likes FROM blog_posts WHERE id = %(post_id)s;"
         res = connectToMySQL('project').query_db(query, {'post_id': post_id})
-        current_likes = res[0]['likes'] if res and len(res) > 0 else 0
+        updated_likes = res[0]['likes'] if res and len(res) > 0 else 0
+        
         return jsonify({
-            'success': False, 
-            'liked': True, 
-            'likes': current_likes, 
-            'message': 'Already liked'
-        }), 200
+            'success': True,
+            'liked': False,
+            'likes': updated_likes,
+            'message': 'Unliked'
+        })
+    else:
+        # User hasn't liked the post yet; add a like.
+        query = "UPDATE blog_posts SET likes = likes + 1 WHERE id = %(post_id)s;"
+        connectToMySQL('project').query_db(query, {'post_id': post_id})
+        
+        # Insert a new like record.
+        query = "INSERT INTO post_likes (user_id, post_id) VALUES (%(user_id)s, %(post_id)s);"
+        connectToMySQL('project').query_db(query, check_data)
+        
+        # Retrieve the updated like count.
+        query = "SELECT likes FROM blog_posts WHERE id = %(post_id)s;"
+        res = connectToMySQL('project').query_db(query, {'post_id': post_id})
+        updated_likes = res[0]['likes'] if res and len(res) > 0 else 0
+        
+        return jsonify({
+            'success': True,
+            'liked': True,
+            'likes': updated_likes,
+            'message': 'Liked'
+        })
 
-    # Otherwise, increment the like count in the blog_posts table.
-    query = "UPDATE blog_posts SET likes = likes + 1 WHERE id = %(post_id)s;"
-    connectToMySQL('project').query_db(query, {'post_id': post_id})
-
-    # Insert a new record into post_likes to record this user's like.
-    query = "INSERT INTO post_likes (user_id, post_id) VALUES (%(user_id)s, %(post_id)s);"
-    connectToMySQL('project').query_db(query, {'user_id': user_id, 'post_id': post_id})
-
-    # Retrieve the updated like count.
-    query = "SELECT likes FROM blog_posts WHERE id = %(post_id)s;"
-    res = connectToMySQL('project').query_db(query, {'post_id': post_id})
-    updated_likes = res[0]['likes'] if res and len(res) > 0 else 0
-
-    return jsonify({'success': True, 'likes': updated_likes})
 
 @app.route('/logout')
 def logout():
