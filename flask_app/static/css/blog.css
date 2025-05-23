@@ -39,16 +39,16 @@ header {
 
 /* Override H1 with your desired styling */
 h1 {
-    font-family: "avenir-next-lt-pro", sans-serif;
-    font-weight: 900;
-    font-style: italic;
-    font-size: 3em;
+    font-family: "pressio", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size:2em;
     color:#212529; 
   }
 
 h3{
-    font-family: "avenir-next-lt-pro", sans-serif;
-    font-weight: 400;
+    font-family: "pressio", sans-serif;
+    font-weight: 300;
     font-style: normal;
     font-size: 1.5em; /* or whatever you prefer */
     white-space: nowrap;
@@ -168,7 +168,7 @@ p{
     color:#212529 ;
   }
   
-  input, textarea,.reply-form {
+  input,textarea,.reply-form,label {
     width: 100%;
     padding: 8px;
     margin-top: 5px;
