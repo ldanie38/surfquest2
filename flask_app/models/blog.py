@@ -9,15 +9,17 @@ class BlogPost:
         self.created_at = data['created_at']
         self.likes = data['likes']
         self.updated_at = data['updated_at']
+        # Use get() so it doesn’t throw an error if image_url isn’t provided
+        self.image_url = data.get('image_url')
         
     db='project'
-    
+
     @classmethod
     def save(cls, data):
-        query = '''INSERT INTO blog_posts (title, content, author)
-                   VALUES (%(title)s, %(content)s, %(author)s);'''
-        return connectToMySQL('project').query_db(query, data)
-
+            query = '''INSERT INTO blog_posts (title, content, author, image_url)
+                    VALUES (%(title)s, %(content)s, %(author)s, %(image_url)s);'''
+            return connectToMySQL(cls.db).query_db(query, data)
+        
     @classmethod
     def get_all(cls):
         query = '''SELECT * FROM blog_posts ORDER BY created_at DESC;'''

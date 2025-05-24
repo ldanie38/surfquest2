@@ -5,6 +5,11 @@ from flask_app.models.blog import BlogPost
 from flask_app.models.user_model import User
 from flask_app.models.comment_model import Comment
 from datetime import datetime
+from werkzeug.utils import secure_filename
+import os
+from flask import url_for
+
+
 
 
 
@@ -43,14 +48,16 @@ def prevent_get():
     flash("Invalid request method.")
     return redirect('/blog/new')
 
+
+
 @app.route('/blog/create', methods=['POST'])
 def create_blog():
-    """Handle blog post submission with validation."""
+    """Handle blog post submission with validation and optional image upload."""
     if 'user_id' not in session:
         flash("You must be logged in to post.")
         return redirect('/login')
 
-    # Validate input
+    # Validate title and content.
     title = request.form.get("title", "").strip()
     content = request.form.get("content", "").strip()
 
@@ -58,15 +65,27 @@ def create_blog():
         flash("Title and content cannot be empty.")
         return redirect('/blog/new')
 
-    # Store the user ID as the author (foreign key)
+    # Prepare the data dictionary.
     data = {
         "title": title,
         "content": content,
-        "author": session["user_id"]
+        "author": session["user_id"]  # This should align with your BlogPost model.
     }
+    
+    # Check for uploaded blog post image.
+    image_file = request.files.get("post_image")
+    image_url = None
+    if image_file and image_file.filename:
+        filename = secure_filename(image_file.filename)
+        file_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+        image_file.save(file_path)
+        image_url = url_for('static', filename=f"uploads/{filename}")
+        data["image_url"] = image_url  # Add the image URL to your data for saving.
 
+    # Save the blog post (ensure your BlogPost model and save method are updated to handle image_url)
     BlogPost.save(data)
     return redirect('/blog')
+
 
 
 
@@ -132,6 +151,7 @@ def like_post():
             'likes': updated_likes,
             'message': 'Liked'
         })
+
 
 
 @app.route('/logout')
