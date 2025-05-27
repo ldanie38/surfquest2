@@ -129,51 +129,57 @@ document.addEventListener("DOMContentLoaded", function() {
     // ========================================
     // Reply Submission (Nested Reply Form)
     // ========================================
-    document.querySelectorAll("form.reply-form").forEach(form => {
-      form.addEventListener("submit", async function(event) {
-        event.preventDefault(); // Prevent page reload
-  
-        const commentId = this.dataset.parentCommentId;
-        const postId = this.querySelector("input[name='post_id']").value;
-        const content = this.querySelector("textarea").value.trim();
-  
-        if (!content) {
-          alert("Reply cannot be empty.");
-          return;
-        }
-  
-        try {
-          const response = await fetch(`/blog/${postId}/comment`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ content, parent_comment_id: commentId })
-          });
-  
-          if (response.ok) {
-            const data = await response.json();
-            // Create and append the new reply element
-            const newReply = document.createElement("div");
-            newReply.classList.add("nested-comment");
-            newReply.innerHTML = `<strong>${data.username}:</strong> ${data.content}`;
-  
-            const repliesContainer = document.getElementById(`replies-container-${commentId}`);
-            if (repliesContainer) {
-              repliesContainer.appendChild(newReply);
-            } else {
-              console.error(`Replies container not found for comment ID: ${commentId}`);
-            }
-            // Clear the textarea after submission
-            this.querySelector("textarea").value = "";
-          } else {
-            alert("Failed to post reply.");
-            console.error("Error submitting reply:", response);
-          }
-        } catch (error) {
-          console.error("AJAX request failed:", error);
-        }
+document.querySelectorAll("form.reply-form").forEach(form => {
+  form.addEventListener("submit", async function (event) {
+    event.preventDefault(); // Prevent page reload
+
+    const commentId = this.dataset.parentCommentId;
+    const postId = this.querySelector("input[name='post_id']").value;
+    const content = this.querySelector("textarea").value.trim();
+
+    if (!content) {
+      alert("Reply cannot be empty.");
+      return;
+    }
+
+    // Create FormData which automatically picks up file inputs if any
+    let formData = new FormData(this);
+    formData.append("parent_comment_id", commentId);
+
+    try {
+      const response = await fetch(`/blog/${postId}/comment`, {
+        method: "POST",
+        // Do not set the Content-Type header manually
+        body: formData
       });
-    });
-  
+
+      if (response.ok) {
+        const data = await response.json();
+        // Create and append the new reply element, including a check for an image URL.
+        const newReply = document.createElement("div");
+        newReply.classList.add("nested-comment");
+        newReply.innerHTML = `<strong>${data.username}:</strong> ${data.content}`;
+        if (data.image_url) {
+          newReply.innerHTML += `<br><img src="${data.image_url}" alt="Comment image" style="max-width:200px;">`;
+        }
+        const repliesContainer = document.getElementById(`replies-container-${commentId}`);
+        if (repliesContainer) {
+          repliesContainer.appendChild(newReply);
+        } else {
+          console.error(`Replies container not found for comment ID: ${commentId}`);
+        }
+        // Clear the textarea after submission
+        this.querySelector("textarea").value = "";
+      } else {
+        alert("Failed to post reply.");
+        console.error("Error submitting reply:", response);
+      }
+    } catch (error) {
+      console.error("AJAX request failed:", error);
+    }
+  });
+});
+
     // ==================
     // Image Rotation
     // ==================
