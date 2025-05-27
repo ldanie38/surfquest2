@@ -1,0 +1,62 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+
+    display: flex;
+    flex-direction:column; /* Change to row to align items horizontally */
+    justify-content:space-between; /* Align items to the right */
+    align-items: center;
+    gap:50px;
+    height: 100vh;
+    
+    
+}
+
+header {
+    background-color: #f8f9fa;
+    margin-bottom: 10px;
+    text-align: center;
+    margin-bottom: 10px;
+    text-align: center;
+    width: 100%;
+    padding:5px;
+
+}
+
+
+
+
+h1 {
+    font-family: "pressio", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size:2em;
+    color:#212529; 
+  }
+
+main{
+    
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    background-color:#f8f9fa;
+    width:70%;
+   
+    
+
+}
+
+  footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    background-color: #fff;  /* Optional, add a background to avoid overlap issues */
+    padding: 10px 0;
+    box-shadow: 0 -1px 5px rgba(0,0,0,0.1); /* Optional for visual effect */
+  }

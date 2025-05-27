@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explore Places</title>
+  <link rel="stylesheet" href="/static/css/places.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/img/favicon-32x32.png">
+  <link rel="stylesheet" href="https://use.typekit.net/azg5iuq.css"><!--Adobe-->
+  <link rel="stylesheet" href="https://use.typekit.net/jow3iry.css"><!--Adobe-->
+  <link rel="stylesheet" href="https://use.typekit.net/ooa8wne.css"><!--Adobe-->
+</head>
+<body>
+
+<header>
+ <div class="head">
+    <h1>Explore Places</h1>
+ </div>
+</header>
+<main>
+<div class="place-container">
+    <h2>{{ place_name }}</h2>
+    <img src="{{ place_photo }}" alt="{{ place_name }}">
+    <p>📍 Address: {{ place_address }}</p>
+    <p>⭐ Rating: {{ place_rating }}/5</p>
+    <p>🕒 Open Now: {{ place_open_status }}</p>
+    <a href="{{ place_url }}" target="_blank">View on Google Maps</a>
+</div>
+
+  <!-- Back to Top Arrow -->
+<div id="backToTop" class="back-to-top">▲</div>
+
+
+</main>
+  <footer>
+    <p>&copy; Catch The Latest Waves</p>
+  </footer>
+<script src="/static/places.js"></script>
+</body>
+</html>
