@@ -29,11 +29,11 @@
 
   // ----- Quotes Rotation Code -----
   const quotes = [
-    "Sometimes, you just have to go with the waves",
-    "Let the other guys go; catch another one.",
-    "There is no new wave, only the sea",
-    "Even the upper end of the river believes in the ocean",
-    "Good vibes only: share the wave, share the stoke."
+    "Let the other guys go",
+    "Catch Another One",
+    "Good vibes only",
+    "Share The Wave",
+    "Share The Stoke",
   ];
   let quoteIndex = 0;  // Use a different variable for quotes
   const quoteElement = document.getElementById('quoteText');
