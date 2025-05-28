@@ -60,3 +60,73 @@ main{
     padding: 10px 0;
     box-shadow: 0 -1px 5px rgba(0,0,0,0.1); /* Optional for visual effect */
   }
+
+
+/* 🔥 Improve Overall Layout */
+#results {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+  gap: 20px;
+  padding: 20px;
+}
+
+/* 🔥 Style Each Place Result */
+.place-container {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.place-container:hover {
+  transform: scale(1.05); /* Subtle hover effect */
+}
+
+/* 🔥 Refine Typography */
+h2 {
+  font-family: "azg5iuq", sans-serif; /* Adobe font */
+  font-size: 20px;
+  color: #333;
+}
+
+p {
+  font-family: "jow3iry", sans-serif;
+  color: #666;
+  font-size: 16px;
+}
+
+/* 🔥 Improve Image Display */
+.place-container img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* 🔥 Make Google Maps Link Stand Out */
+.place-container a {
+  display: block;
+  padding: 10px;
+  background-color: #0073e6;
+  color: white;
+  text-align: center;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-top: 10px;
+}
+
+.place-container a:hover {
+  background-color: #005bb5;
+}
+
+/* 🔥 Back to Top Button Styling */
+.back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #0073e6;
+  color: white;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+}
