@@ -23,7 +23,7 @@ header {
     margin-bottom: 10px;
     text-align: center;
     width: 100%;
-    padding:5px;
+    padding:20px;
 
 }
 
@@ -119,14 +119,24 @@ p {
   background-color: #005bb5;
 }
 
-/* 🔥 Back to Top Button Styling */
 .back-to-top {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #0073e6;
-  color: white;
-  padding: 10px;
+  bottom: 40px;
+  right: 40px;
+  display: none; /* Hidden by default */
+  background-color: #333;
+  color: #fff;
+  padding: 10px 15px;
+  font-size: 20px;
   border-radius: 50%;
   cursor: pointer;
+  z-index: 1000;
+  text-align: center;
+  line-height: 1;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  transition: opacity 0.3s, background-color 0.3s;
+}
+
+.back-to-top:hover {
+  background-color: #555;
 }

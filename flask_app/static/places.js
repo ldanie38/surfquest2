@@ -60,3 +60,23 @@ function getDirections(destination) {
     );
 }
 
+  
+    // ============================
+    // "Back to Top" Button Handler
+    // ============================
+    window.addEventListener('scroll', function() {
+        const backToTop = document.getElementById('backToTop');
+        if (window.pageYOffset > 100) {
+          backToTop.style.display = 'block';
+        } else {
+          backToTop.style.display = 'none';
+        }
+      });
+    
+      const backToTopButton = document.getElementById("backToTop");
+      if (backToTopButton) {
+        backToTopButton.addEventListener("click", function(e) {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
