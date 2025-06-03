@@ -1,0 +1,126 @@
+/* General Styles */
+
+
+body {
+    font-family: "Roboto Mono", monospace;
+    background-color: #f0f8ff; /* Light blue like the ocean */
+    color: #333;
+    line-height: 1.6;
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    height: 100vh; /* Full viewport height */
+    width: 100vw; /* Full viewport width */
+    background-image: url('/static/img/conditions.jpg'); /* Path to your background image */
+    background-size: cover; 
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    
+    
+}
+
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.3); /* White overlay at 50% transparency */
+    z-index: -1; /* Sends it behind all content */
+}
+
+.nav{
+    margin-top: 20px;
+    font-family: "p22-typewriter", sans-serif;
+}
+
+/* Header Styling */
+h1 {
+
+    text-transform: capitalize;
+    color:rgb(64, 61, 61);
+    padding: 20px;
+    text-align: center;
+    margin: 0;
+    font-family: "p22-typewriter", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    
+}
+
+h2 {
+    text-align: center;
+    color: #005f8c;
+    margin-top: 10px;
+}
+
+.box{
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* List Styling */
+ul {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 600px;
+}
+
+li {
+  /* Soft light blue background for items */
+    margin: 10px 0;
+    padding: 10px;
+
+}
+
+/* Highlight Important Info */
+strong {
+    color: #0077be;
+}
+
+/* Final Message Styling */
+p {
+    text-align: center;
+   
+    padding: 15px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 600px;
+    margin: 20px auto;
+    font-size: 1.1em;
+
+}
+
+.middle{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+iframe{
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+    /* Responsive Design */
+    @media (max-width: 600px) {
+        h1, h2 {
+            font-size: 1.5em;
+        }
+
+        p, ul li {
+            font-size: 1em;
+        }
+    }
+
+
+
+
+

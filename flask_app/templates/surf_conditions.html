@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/static/css/conditions_result.css"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="static/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-48x48.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <link rel="stylesheet" href="https://use.typekit.net/gqv8jnv.css">
+     <title>SurfQuest</title>
+</head>
+<body>
+
+    <div class='nav'>
+        <h1>Surf Conditions for {{ location }}</h1>
+    </div>
+
+    <div class='middle'>
+        <div class='box'>
+            <ul>
+                <li><strong>Wave Height:</strong> {{ wave_height }} meters</li>
+                <li><strong>Wind Speed:</strong> {{ wind_speed }} m/s (roughly {{ wind_speed_mph }} mph)</li>
+                <li><strong>Wind Direction:</strong> {{ wind_direction }}° ({{ wind_classification }})</li>
+                <li><strong>Air Temperature:</strong> {{ air_temperature_f }}°F</li>
+                <li><strong>Chance of Rain:</strong> {{ rain_message }}</li>
+                <li><strong>Tide:</strong> {{ tide_message }}</li>
+
+            <p>{{ final_message }}</p>
+        </div>
+        
+        <div class="map-container">
+            <iframe
+                width="500"
+                height="350"
+                frameborder="0"
+                style="border:0; width: 500px;"
+                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCR3oDGLh4JBoSYOZedCAMQh7VY_63jVMw&q={{ lat }},{{ lng }}"
+                allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+
+    <script src="static/conditions.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</body>
+</html>
