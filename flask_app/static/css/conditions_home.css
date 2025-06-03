@@ -96,7 +96,14 @@ h1 {
     object-fit: cover; /* Maintain aspect ratio */
 }
 
+a{
+    text-decoration: none;
+    color: #333; 
+}
 
+a:hover {
+    color: #0056b3;
+}
 
 
 

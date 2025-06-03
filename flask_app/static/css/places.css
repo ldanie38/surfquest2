@@ -85,7 +85,7 @@ main{
 
 /* 🔥 Refine Typography */
 h2 {
-  font-family: "azg5iuq", sans-serif; /* Adobe font */
+  font-family: "pressio", sans-serif; /* Adobe font */
   font-size: 20px;
   color: #333;
 }
@@ -139,4 +139,18 @@ p {
 
 .back-to-top:hover {
   background-color: #555;
+}
+
+
+a {
+  text-decoration: none;
+  color: #333; 
+  margin-top: 60px;
+  display: inline-block; /* or block */
+  font-family: "pressio", sans-serif; /* Adobe font */
+  font-size: 15px;
+}
+
+a:hover {
+  color: #0056b3;
 }

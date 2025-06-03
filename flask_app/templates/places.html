@@ -16,11 +16,16 @@
   <div class="head">
     <h1>Explore Places</h1>
   </div>
+  <div class="logout">
+    <a href="/home">back home</a> |
+    <a href="/logout">log out</a>
+  </div>
 </header>
 
 <main>
   <div class='form'>
     <form id="searchForm">
+        <h2>What Are You Looking For</h2>
         <input type="text" id="searchQuery" placeholder="Search for surf shops, cafes, etc.">
         <button type="submit">Search</button>
     </form>
@@ -28,6 +33,8 @@
 
   <!-- This is where results will be dynamically displayed -->
   <div id="results"></div>
+
+
 
   <!-- Back to Top Arrow -->
   <div id="backToTop" class="back-to-top">▲</div>

@@ -121,6 +121,16 @@ iframe{
     }
 
 
-
+    a {
+        text-decoration: none;
+        color: #333; 
+        margin-top: 60px;
+        display: inline-block; /* or block */
+    }
+    
+    a:hover {
+        color: #0056b3;
+    }
+    
 
 
