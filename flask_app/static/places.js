@@ -34,7 +34,14 @@ function getDirections(destination) {
       "url('/static/img/open.jpeg')",
       "url('/static/img/igloo.jpeg')",
       "url('/static/img/surf_shop.jpeg')",
-      "url('/static/img/beach_rest.jpeg')"
+      "url('/static/img/beach_rest.jpeg')",
+      "url('/static/img/gym.jpeg')",
+      "url('/static/img/waw.jpeg')",
+      "url('/static/img/tacos.jpeg')",
+      "url('/static/img/disco.jpeg')",
+      "url('/static/img/room.jpeg')"
+
+
 
 
     ];
@@ -55,7 +62,7 @@ function getDirections(destination) {
       console.log("Starting background image rotation");
       // Set the initial image immediately.
       changeBackgroundImage();
-      backgroundInterval = setInterval(changeBackgroundImage, 2000);
+      backgroundInterval = setInterval(changeBackgroundImage, 4000);
     }
   
     function stopBackgroundRotation() {
