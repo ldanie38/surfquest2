@@ -21,14 +21,15 @@
     <a href="/logout">log out</a>
   </div>
 </header>
-
+<div id="background"></div>
 <main>
-  <div class="form">
+ <div class="form">
     <form id="searchForm">
       <h2>What Are You Looking For?</h2>
       <!-- Single input field for both search term and location -->
       <input type="text" id="searchQuery" placeholder="e.g., surf shops in Tamarindo">
       <button type="submit">Search</button>
+      <button type="button" id="refreshSearchBtn">Refresh Search</button>
     </form>
 </div>
 
@@ -37,7 +38,7 @@
 
   <!--  results will be dynamically displayed -->
   <div id="results"></div>
-  <button type="button" id="refreshSearchBtn">Refresh Search</button>
+ 
 
 
 
