@@ -1,22 +1,17 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-
-    display: flex;
-    flex-direction:column; /* Change to row to align items horizontally */
-    justify-content:space-between; /* Align items to the right */
-    align-items: center;
-    gap:50px;
-    height: 100vh;
-    transition: background 0.5s ease;
-  
-     /* Your image background-image: url('/static/img/aloha.jpeg'); */
-
-    
+  display: flex;
+  flex-direction: column; /* Change to row to align items horizontally */
+  justify-content: space-between; /* Align items to the right */
+  align-items: center;
+  gap: 50px;
+  height: 100vh;
+  transition: background 0.5s ease;
 }
 
 #background {
@@ -32,55 +27,40 @@ body {
   opacity: 1;
 }
 
-
-
-
-
 header {
-    background-color: #f8f9fa;
-    margin-bottom: 10px;
-    text-align: center;
-    margin-bottom: 10px;
-    text-align: center;
-    width: 100%;
-    padding:20px;
-    height:150px;
-
+  background-color: #f8f9fa;
+  margin-bottom: 10px;
+  text-align: center;
+  width: 100%;
+  padding: 20px;
+  height: 150px;
 }
-
-
-
 
 h1 {
-    font-family: "pressio", sans-serif;
-    font-weight: 500;
-    font-style: normal;
-    font-size:2em;
-    color:#212529; 
-  }
-
-  main {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
+  font-family: "pressio", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 2em;
+  color: #212529; 
 }
 
+main {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  background-color: #fff;  /* Optional, add a background to avoid overlap issues */
+  padding: 10px 0;
+  box-shadow: 0 -1px 5px rgba(0,0,0,0.1); /* Optional for visual effect */
+}
 
-  footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    background-color: #fff;  /* Optional, add a background to avoid overlap issues */
-    padding: 10px 0;
-    box-shadow: 0 -1px 5px rgba(0,0,0,0.1); /* Optional for visual effect */
-  }
-
-
-/* 🔥 Improve Overall Layout */
 #results {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
@@ -88,7 +68,6 @@ h1 {
   padding: 20px;
 }
 
-/* 🔥 Style Each Place Result */
 .place-container {
   background: #ffffff;
   border-radius: 10px;
@@ -101,7 +80,6 @@ h1 {
   transform: scale(1.05); /* Subtle hover effect */
 }
 
-/* 🔥 Refine Typography */
 h2 {
   font-family: "pressio", sans-serif; /* Adobe font */
   font-size: 20px;
@@ -114,24 +92,47 @@ p {
   font-size: 16px;
 }
 
-    /* Search form styling */
-    #searchForm {
-      margin: 20px;
-    }
-    #searchForm input, #searchForm button {
-      padding: 10px;
-      font-size: 16px;
-    }
-    /* Search results area */
-    #results {
-      margin: 20px;
-    }
-    /* Refresh button */
-    #refreshSearchBtn {
-      margin: 20px;
-      padding: 10px 15px;
-      font-size: 16px;
-    }
+/* Search form styling */
+#searchForm {
+  margin: 20px;
+}
+
+#searchForm input, #searchForm button {
+  padding: 10px;
+  font-size: 16px;
+  font-family: "pressio", sans-serif; /* Adobe font */
+  font-size: 15px;
+  color: #333;
+  border: none;
+}
+
+.form {
+  display: flex;
+  flex-direction: column; /* or row depending on layout */
+  align-items: center; /* Adjust as needed */
+  justify-content: space-between;
+}
+
+/* Search results area */
+#results {
+  margin: 20px;
+  font-family: "pressio", sans-serif; /* Adobe font */
+  font-size: 15px;
+  color: #333;
+  border-radius: 3px;
+}
+
+/* Refresh button */
+#refreshSearchBtn {
+  margin: 20px;
+  padding: 10px 15px;
+  font-size: 16px;
+  font-family: "pressio", sans-serif; /* Adobe font */
+  font-size: 15px;
+  color: #333;
+  border-radius: 3px;
+}
+
 /* 🔥 Improve Image Display */
 .place-container img {
   width: 100%;
@@ -139,54 +140,11 @@ p {
   border-radius: 8px;
 }
 
-/* 🔥 Make Google Maps Link Stand Out */
+/* Make Google Maps Link Stand Out */
 .place-container a {
   display: block;
   padding: 10px;
   background-color: #0073e6;
   color: white;
   text-align: center;
-  border-radius: 5px;
-  text-decoration: none;
-  margin-top: 10px;
-}
-
-.place-container a:hover {
-  background-color: #005bb5;
-}
-
-.back-to-top {
-  position: fixed;
-  bottom: 40px;
-  right: 40px;
-  display: none; /* Hidden by default */
-  background-color: #333;
-  color: #fff;
-  padding: 10px 15px;
-  font-size: 20px;
-  border-radius: 50%;
-  cursor: pointer;
-  z-index: 1000;
-  text-align: center;
-  line-height: 1;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-  transition: opacity 0.3s, background-color 0.3s;
-}
-
-.back-to-top:hover {
-  background-color: #555;
-}
-
-
-a {
-  text-decoration: none;
-  color: #333; 
-  margin-top: 60px;
-  display: inline-block; /* or block */
-  font-family: "pressio", sans-serif; /* Adobe font */
-  font-size: 15px;
-}
-
-a:hover {
-  color: #0056b3;
-}
+  border
