@@ -19,18 +19,22 @@ body {
     
 }
 
+
+
 #background {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1; /* Behind your content */
+  z-index: -1;
   background-size: cover;
   background-position: center;
-  transition: opacity 1s ease;
+  transition: opacity 1s ease-in-out; /* Smooth fade effect */
   opacity: 1;
+  
 }
+
 
 
 

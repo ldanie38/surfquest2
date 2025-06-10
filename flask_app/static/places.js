@@ -32,12 +32,13 @@ function getDirections(destination) {
     const bgImages = [
       "url('/static/img/aloha.jpeg')",
       "url('/static/img/open.jpeg')",
-      "url('/static/img/igloo.jpeg')",
       "url('/static/img/surf_shop.jpeg')",
       "url('/static/img/beach_rest.jpeg')",
       "url('/static/img/gym.jpeg')",
       "url('/static/img/waw.jpeg')",
       "url('/static/img/tacos.jpeg')",
+      "url('/static/img/shack.jpeg')",
+      "url('/static/img/fishing.jpeg')",
       "url('/static/img/disco.jpeg')",
       "url('/static/img/room.jpeg')"
 
@@ -47,24 +48,33 @@ function getDirections(destination) {
     ];
     let currentBgIndex = 0;
     let backgroundInterval = null;
-  
+    
     function changeBackgroundImage() {
       if (backgroundEl) {
-        backgroundEl.style.backgroundImage = bgImages[currentBgIndex];
-        backgroundEl.style.backgroundSize = "cover";
-        backgroundEl.style.backgroundPosition = "center";
-        // Move sequentially – once reached the end, wrap to the beginning.
-        currentBgIndex = (currentBgIndex + 1) % bgImages.length;
+        // Fade out before changing image
+        backgroundEl.style.opacity = "0";
+    
+        setTimeout(() => {
+          // Change background image after fade out
+          backgroundEl.style.backgroundImage = bgImages[currentBgIndex];
+          backgroundEl.style.backgroundSize = "cover";
+          backgroundEl.style.backgroundPosition = "center";
+    
+          // Fade back in
+          backgroundEl.style.opacity = "1";
+          
+          // Move sequentially – once reached the end, wrap to the beginning
+          currentBgIndex = (currentBgIndex + 1) % bgImages.length;
+        }, 1000); // Delay should match CSS transition time
       }
     }
-  
+    
     function startBackgroundRotation() {
       console.log("Starting background image rotation");
-      // Set the initial image immediately.
-      changeBackgroundImage();
+      changeBackgroundImage(); // Set first image
       backgroundInterval = setInterval(changeBackgroundImage, 4000);
     }
-  
+    
     function stopBackgroundRotation() {
       if (backgroundInterval) {
         console.log("Stopping background image rotation");
@@ -72,12 +82,13 @@ function getDirections(destination) {
         backgroundInterval = null;
       }
     }
-  
-    // On load, if there are no search results, start rotating the background images.
+    
+    // On load, if there are no search results, start rotating images
     const resultsDiv = document.getElementById("results");
     if (resultsDiv && resultsDiv.childElementCount === 0) {
       startBackgroundRotation();
     }
+    
   
     //////////////////////////////////////////////////
     // Search Form Handling
