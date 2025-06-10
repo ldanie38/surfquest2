@@ -10,6 +10,5 @@ import os
 
 
 if __name__ == "__main__":
-    # Heroku sets the PORT dynamically, fallback to 4242 for local dev
-    PORT = int(os.getenv("PORT", 4242))
-    app.run(debug=True, host="0.0.0.0", port=PORT)
+    port = int(os.getenv("PORT", 5000))  # Default to 5000 if PORT isn't set
+    app.run(host="0.0.0.0", port=port)
