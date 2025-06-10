@@ -1,66 +1,34 @@
-# a cursor is the object we use to interact with the database
-import pymysql.cursors
-# this class will give us an instance of a connection to our database
 import os
+import pymysql
 from dotenv import load_dotenv
-load_dotenv()  # Load environment variables
+from urllib.parse import urlparse
 
-class MySQLConnection:
-    def __init__(self, db):
-        connection = pymysql.connect(
-            host=os.getenv("DB_HOST", "localhost"),
-            user=os.getenv("DB_USERNAME", "root"),
-            password=os.getenv("DB_PASSWORD"),
-            db=db,
+# Load environment variables
+load_dotenv()
+
+class Config:
+    SECRET_KEY = os.getenv("SECRET_KEY", "fallback_secret")  # Security token
+    DEBUG = os.getenv("DEBUG", False)  # Debug mode setting
+
+    # Parse the DATABASE_URL for JAWSDB configuration
+    DATABASE_URL = os.getenv("JAWSDB_URL")
+
+    if DATABASE_URL:
+        parsed_url = urlparse(DATABASE_URL)
+        DB_HOST = parsed_url.hostname
+        DB_USERNAME = parsed_url.username
+        DB_PASSWORD = parsed_url.password
+        DB_NAME = parsed_url.path[1:]  # Remove the leading "/"
+
+        # Create the MySQL connection
+        conn = pymysql.connect(
+            host=DB_HOST,
+            user=DB_USERNAME,
+            password=DB_PASSWORD,
+            database=DB_NAME,
             charset="utf8mb4",
             cursorclass=pymysql.cursors.DictCursor,
             autocommit=False,
         )
-        self.connection = connection
-
-    # the method to query the database
-    def query_db(self, query:str, data:dict=None):
-        with self.connection.cursor() as cursor:
-            try:
-                query = cursor.mogrify(query, data)
-                print("Running Query:", query)
-     
-                cursor.execute(query)
-                if query.lower().find("insert") >= 0:
-                    # INSERT queries will return the ID NUMBER of the row inserted
-                    self.connection.commit()
-                    return cursor.lastrowid
-                elif query.lower().find("select") >= 0:
-                    # SELECT queries will return the data from the database as a LIST OF DICTIONARIES
-                    result = cursor.fetchall()
-                    return result
-                else:
-                    # UPDATE and DELETE queries will return nothing
-                    self.connection.commit()
-            except Exception as e:
-                # if the query fails the method will return FALSE
-                print("Something went wrong", e)
-                return False
-            finally:
-                # close the connection
-                self.connection.close() 
-# connectToMySQL receives the database we're using and uses it to create an instance of MySQLConnection
-def connectToMySQL(db):
-    return MySQLConnection(db)
-
-import os
-from dotenv import load_dotenv
-
-# Load environment variables from .env file
-load_dotenv()
-
-class Config:
-    DATABASE_URL = os.getenv("DATABASE_URL")
-    SECRET_KEY = os.getenv("SECRET_KEY", "fallback_secret")  # Default if missing
-    DEBUG = os.getenv("DEBUG", False)
-
-   
-    DB_HOST = os.getenv("DB_HOST")
-    DB_USERNAME = os.getenv("DB_USERNAME")
-    DB_PASSWORD = os.getenv("DB_PASSWORD")
-    print(f"Database URL: {DATABASE_URL}")
+    else:
+        print("Error: DATABASE_URL is missing. Make sure it's set in your environment variables.")
