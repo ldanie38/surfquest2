@@ -1,18 +1,23 @@
 # a cursor is the object we use to interact with the database
 import pymysql.cursors
 # this class will give us an instance of a connection to our database
+import os
+from dotenv import load_dotenv
+load_dotenv()  # Load environment variables
+
 class MySQLConnection:
     def __init__(self, db):
-        # change the user and password as needed
-        connection = pymysql.connect(host = 'localhost',
-                                    user = 'root', 
-                                    password = 'Stanislav24', 
-                                    db = db,
-                                    charset = 'utf8mb4',
-                                    cursorclass = pymysql.cursors.DictCursor,
-                                    autocommit = False)
-        # establish the connection to the database
+        connection = pymysql.connect(
+            host=os.getenv("DB_HOST", "localhost"),
+            user=os.getenv("DB_USERNAME", "root"),
+            password=os.getenv("DB_PASSWORD"),
+            db=db,
+            charset="utf8mb4",
+            cursorclass=pymysql.cursors.DictCursor,
+            autocommit=False,
+        )
         self.connection = connection
+
     # the method to query the database
     def query_db(self, query:str, data:dict=None):
         with self.connection.cursor() as cursor:
@@ -42,3 +47,20 @@ class MySQLConnection:
 # connectToMySQL receives the database we're using and uses it to create an instance of MySQLConnection
 def connectToMySQL(db):
     return MySQLConnection(db)
+
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+class Config:
+    DATABASE_URL = os.getenv("DATABASE_URL")
+    SECRET_KEY = os.getenv("SECRET_KEY", "fallback_secret")  # Default if missing
+    DEBUG = os.getenv("DEBUG", False)
+
+   
+    DB_HOST = os.getenv("DB_HOST")
+    DB_USERNAME = os.getenv("DB_USERNAME")
+    DB_PASSWORD = os.getenv("DB_PASSWORD")
+    print(f"Database URL: {DATABASE_URL}")
