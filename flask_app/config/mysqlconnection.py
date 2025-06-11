@@ -1,37 +1,15 @@
-import os
-from urllib.parse import urlparse
 import pymysql.cursors
-from dotenv import load_dotenv
 
-# Load environment variables
-load_dotenv()
-
-# Get the composite DATABASE_URL from your .env or Heroku config vars
-DATABASE_URL = os.environ.get('DATABASE_URL')
-# Example: mysql://username:password@hostname:port/databasename
-
-# Parse the URL to extract connection details
-url = urlparse(DATABASE_URL)
-
-# Extract individual components from the parsed URL
-db_host = url.hostname
-db_user = url.username
-db_password = url.password
-db_port = url.port  # By default, MySQL uses port 3306 if not provided
-db_name = url.path.lstrip('/')  # Remove the leading '/' from the path
+db = 'project'
 
 class MySQLConnection:
     def __init__(self, db):
-        """
-        If you pass in 'db', it can override the one in the URL.
-        Otherwise, it will use the database name from your DATABASE_URL.
-        """
+        # You can eventually update these credentials to be read from environment variables
         self.connection = pymysql.connect(
-            host=db_host,            # from DATABASE_URL
-            user=db_user,            # from DATABASE_URL
-            password=db_password,    # from DATABASE_URL
-            db=db if db else db_name, # use provided db or default db name
-            port=db_port,            # from DATABASE_URL
+            host='localhost',
+            user='root',
+            password='Stanislav24',
+            db=db,
             charset='utf8mb4',
             cursorclass=pymysql.cursors.DictCursor,
             autocommit=False
@@ -40,21 +18,20 @@ class MySQLConnection:
     def query_db(self, query: str, data: dict = None):
         with self.connection.cursor() as cursor:
             try:
-                # Format the query with the given data
+                # This formats the query with the data provided
                 formatted_query = cursor.mogrify(query, data)
                 print("Running Query:", formatted_query)
-
-                cursor.execute(query)
-                
-                # INSERT operations: commit and return the new record ID
+                # Pass both query and data to execute for proper substitution.
+                cursor.execute(query, data)
+                # If it's an INSERT operation, return the new record's id
                 if query.strip().lower().startswith("insert"):
                     self.connection.commit()
                     return cursor.lastrowid
-                # SELECT operations: return fetched results
+                # For SELECT operations, return all fetched data
                 elif query.strip().lower().startswith("select"):
                     result = cursor.fetchall()
                     return result
-                # UPDATE or DELETE operations
+                # For UPDATE and DELETE operations
                 else:
                     self.connection.commit()
             except Exception as e:
@@ -63,9 +40,5 @@ class MySQLConnection:
             finally:
                 self.connection.close()
 
-def connectToMySQL(db=None):
-    """
-    Returns an instance of MySQLConnection.
-    If no database name is provided (db is None), it will use the one parsed from DATABASE_URL.
-    """
+def connectToMySQL(db):
     return MySQLConnection(db)
