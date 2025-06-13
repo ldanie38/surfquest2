@@ -1,44 +1,56 @@
+import os
 import pymysql.cursors
-
-db = 'project'
+from urllib.parse import urlparse
 
 class MySQLConnection:
     def __init__(self, db):
-        # You can eventually update these credentials to be read from environment variables
+        # Retrieve database URL from environment variables or fallback
+        db_url = os.getenv("JAWSDB_URL") or os.getenv("DATABASE_URL")
+
+        if not db_url:
+            raise ValueError("Database URL not found in environment variables.")
+
+        url = urlparse(db_url)
+
+        if not all([url.hostname, url.username, url.password, url.path]):
+            raise ValueError("Invalid database URL format.")
+
         self.connection = pymysql.connect(
-            host='localhost',
-            user='root',
-            password='Stanislav24',
-            db=db,
+            host=url.hostname,
+            port=url.port or 3306,
+            user=url.username,
+            password=url.password,
+            db=url.path.lstrip('/'),
             charset='utf8mb4',
             cursorclass=pymysql.cursors.DictCursor,
-            autocommit=False
+            autocommit=True
         )
 
     def query_db(self, query: str, data: dict = None):
         with self.connection.cursor() as cursor:
             try:
-                # This formats the query with the data provided
-                formatted_query = cursor.mogrify(query, data)
-                print("Running Query:", formatted_query)
-                # Pass both query and data to execute for proper substitution.
-                cursor.execute(query, data)
-                # If it's an INSERT operation, return the new record's id
-                if query.strip().lower().startswith("insert"):
+                if data:
+                    query = cursor.mogrify(query, data)
+
+                print("Running Query:", query)
+                cursor.execute(query, data if data else ())
+
+                if query.lower().startswith(("insert", "update", "delete")):
                     self.connection.commit()
-                    return cursor.lastrowid
-                # For SELECT operations, return all fetched data
-                elif query.strip().lower().startswith("select"):
-                    result = cursor.fetchall()
-                    return result
-                # For UPDATE and DELETE operations
-                else:
-                    self.connection.commit()
-            except Exception as e:
-                print("Something went wrong:", e)
+                    return cursor.lastrowid if query.lower().startswith("insert") else True
+                elif query.lower().startswith("select"):
+                    return cursor.fetchall()
+
+            except pymysql.MySQLError as e:
+                print("Database error:", e)
                 return False
+            
             finally:
-                self.connection.close()
+                cursor.close()
+
+    def close_connection(self):
+        """Manually close the database connection."""
+        self.connection.close()
 
 def connectToMySQL(db):
     return MySQLConnection(db)
