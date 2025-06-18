@@ -1,37 +1,60 @@
+import os
 import pymysql.cursors
+from urllib.parse import urlparse
 
 db = 'project'
 
 class MySQLConnection:
     def __init__(self, db):
-        # You can eventually update these credentials to be read from environment variables
-        self.connection = pymysql.connect(
-            host='localhost',
-            user='root',
-            password='Stanislav24',
-            db=db,
-            charset='utf8mb4',
-            cursorclass=pymysql.cursors.DictCursor,
-            autocommit=False
-        )
+        # Check if the database URL from Heroku's JAWSDB add-on is set in the environment.
+        db_url = os.environ.get('JAWSDB_URL')
+        if db_url:
+            # Parse the URL and extract connection details.
+            url = urlparse(db_url)
+            connection_config = {
+                'host': url.hostname,
+                'user': url.username,
+                'password': url.password,
+                'db': url.path.lstrip('/'),
+                'charset': 'utf8mb4',
+                'cursorclass': pymysql.cursors.DictCursor,
+                'autocommit': False,
+                'port': url.port or 3306
+            }
+            print("Using JAWSDB_URL from environment.")
+        else:
+            # Fallback to your local development settings.
+            connection_config = {
+                'host': 'localhost',
+                'user': 'root',
+                'password': 'Stanislav24',
+                'db': db,
+                'charset': 'utf8mb4',
+                'cursorclass': pymysql.cursors.DictCursor,
+                'autocommit': False
+            }
+            print("Using local DB credentials.")
+
+        try:
+            self.connection = pymysql.connect(**connection_config)
+        except Exception as e:
+            print("Error connecting to the database:", e)
+            raise
 
     def query_db(self, query: str, data: dict = None):
         with self.connection.cursor() as cursor:
             try:
-                # This formats the query with the data provided
+                # Format the query with the provided data for debugging.
                 formatted_query = cursor.mogrify(query, data)
                 print("Running Query:", formatted_query)
-                # Pass both query and data to execute for proper substitution.
                 cursor.execute(query, data)
-                # If it's an INSERT operation, return the new record's id
+                # Handle INSERT, SELECT, UPDATE, or DELETE accordingly.
                 if query.strip().lower().startswith("insert"):
                     self.connection.commit()
                     return cursor.lastrowid
-                # For SELECT operations, return all fetched data
                 elif query.strip().lower().startswith("select"):
                     result = cursor.fetchall()
                     return result
-                # For UPDATE and DELETE operations
                 else:
                     self.connection.commit()
             except Exception as e:
@@ -42,3 +65,4 @@ class MySQLConnection:
 
 def connectToMySQL(db):
     return MySQLConnection(db)
+
