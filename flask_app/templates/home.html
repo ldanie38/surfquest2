@@ -1,83 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Favicon for most browsers -->
-        <link rel="icon" type="image/png" sizes="32x32" href="static/img/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="static/img/favicon-16x16.png">
-        <link rel="shortcut icon" href="/favicon.ico">
-        <!-- For Apple devices -->
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-        <!-- Theme color for Chrome, Firefox OS and Opera -->
-        <meta name="theme-color" content="#ffffff">
+{# templates/home.html #}
+{% extends "layout.html" %}
 
-        <!--Adobe font-->
-        <link rel="stylesheet" href="https://use.typekit.net/wta8wyj.css">
-        <link rel="stylesheet" href="https://use.typekit.net/jee6jax.css"> <!--Adobe font for video-->
-
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="static/css/home.css">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.typekit.net/gqv8jnv.css"> <!-- Adobe font-->
-    <link rel="stylesheet" href="https://use.typekit.net/azg5iuq.css"><!--Adobe-->
-    <link rel="stylesheet" href="https://use.typekit.net/jow3iry.css"><!--Adobe-->
-    <link rel="stylesheet" href="https://use.typekit.net/ooa8wne.css"><!--Adobe-->
-</head>
-<body>
-    <header>
-        {% if username %}
-        <p style="font-size: 1.5em; color:#2667ff;">SurfQuest</p>
-    {% else %}
-        <p></p>
-    {% endif %}
-        <nav>
-            <ul>
-                <li><a href="#user-accounts">User Account</a></li>
-                <li><a href="/conditions">Surf Conditions</a></li>
-                <li><a href="#surf-spots">Surf Spots by Region</a></li>
-                <li><a href="#accommodation-links">Accommodation Links</a></li>
-                <li><a href="/blog">Blog</a></li>
-                <li><a href="/places">Explore Places</a></li>
-            </ul>
-        </nav>
-    </header>
-   
-        <!-- Video Section Under the Nav Bar -->
-      <section id="hero-video">
-        <video id="rotatingVideo" autoplay muted playsinline>
-          <source src="/static/video/surfing7.mp4" type="video/mp4">
-          Your browser does not support HTML5 video.
-        </video>
-        <!-- The overlay for quotes -->
-        <div class="quote-overlay">
-          <h2 id="quoteText" class="quote">Catch Waves Not Feelings</h2>
-        </div>
-      </section>
-      
-    <div class='logout'>
-        <a href="/logout">log out</a>
+{% block hero %}
+  <section id="hero-video">
+    <video autoplay muted playsinline>
+      <source 
+        src="{{ url_for('static', filename='video/surfing7.mp4') }}" 
+        type="video/mp4">
+      Your browser does not support HTML5 video.
+    </video>
+    <div class="quote-overlay">
+      <h2 id="quoteText" class="quote">Catch Waves Not Feelings</h2>
     </div>
-    <footer>
-        <p>
-          &copy; 2025 SurfQuest. All rights reserved.
-          {% if username %}
-            Logged in as {{ username|title }}
-          {% endif %}
-        </p>
-      </footer>
-    <script src="/static/home.js"></script>
-</body>
-</html>
+  </section>
+{% endblock %}
 
+{% block content %}
+  <h1>Welcome back, {{ session.username|title }}!</h1>
 
+  <section id="latest" class="my-5">
+    <h3>Latest</h3>
+    <div class="row g-4">
+      {% for post in latest_posts %}
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">{{ post.title }}</h5>
+              <p class="card-text">{{ post.body[:150] }}…</p>
+            </div>
+            <div class="card-footer text-muted">
+              {{ post.created_at.strftime('%b %d, %Y') }}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
 
-
-
-
+  {% if session.get('user_id') %}
+    <div class="logout">
+      <a href="{{ url_for('logout') }}">Log out</a>
+    </div>
+  {% endif %}
+{% endblock %}

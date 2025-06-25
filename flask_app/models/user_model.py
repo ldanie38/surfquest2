@@ -9,14 +9,15 @@ class User:
         self.username = data['username']
         self.email = data['email']
         self.password=data['password']
+        self.is_admin  = data.get('is_admin', False)
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
         
 
     @classmethod
     def save(cls, data):
-        query = ''' INSERT INTO users (username,email,password)
-        VALUES (%(username)s,%(email)s,%(password)s);
+        query = ''' INSERT INTO users (username, email, password, is_admin)
+        VALUES (%(username)s,%(email)s,%(password)s,%(is_admin)s));
         '''
         results= connectToMySQL('project').query_db(query,data)
         return results

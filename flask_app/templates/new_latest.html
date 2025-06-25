@@ -1,0 +1,19 @@
+<!-- templates/new_latest.html -->
+{% extends "layout.html" %}
+
+
+
+{% block content %}
+  <h2>Publish Latest Post</h2>
+  <form action="/latest/create" method="post">
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input name="title" id="title" class="form-control" required>
+    </div>
+    <div class="mb-3">
+      <label for="body" class="form-label">Content</label>
+      <textarea name="body" id="body" class="form-control" rows="6" required></textarea>
+    </div>
+    <button class="btn btn-primary">Publish</button>
+  </form>
+{% endblock %}

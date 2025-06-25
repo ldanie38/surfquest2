@@ -3,7 +3,11 @@ from flask_app.controllers import blogs
 from flask_app.controllers import comments
 from flask_app.controllers import surf_conditions
 from flask_app.controllers import places
+from flask_app.controllers import latest
+from flask_app.controllers import main
 from flask_app import app 
+from flask import session
+from flask_app.models.user_model import User
 import os
 from dotenv import load_dotenv
 
@@ -12,6 +16,14 @@ load_dotenv()  # This loads the variables from your .env file
 
 GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
 DATABASE_URL = os.environ.get('DATABASE_URL')
+
+@app.context_processor
+def inject_current_user():
+    user = None
+    if session.get('user_id'):
+        # Fetch the user from the DB once per request
+        user = User.get_by_id({'id': session['user_id']})
+    return dict(user=user)
 
 
 
