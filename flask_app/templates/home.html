@@ -16,7 +16,7 @@
 {% endblock %}
 
 {% block content %}
-  <h1>Welcome back, {{ session.username|title }}!</h1>
+ 
 
   <section id="latest" class="my-5">
     <h3>Latest</h3>
@@ -43,3 +43,31 @@
     </div>
   {% endif %}
 {% endblock %}
+{% block scripts %}
+  <script>
+    // ensure this runs after DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      const quotes = [
+        "Let the other guys go",
+        "Catch Another One",
+        "Good vibes only",
+        "Share The Wave",
+        "Share The Stoke"
+      ];
+      let quoteIndex = 0;
+      const quoteEl = document.getElementById('quoteText');
+
+      function changeQuote() {
+        quoteEl.classList.add('fade-out');
+        setTimeout(() => {
+          quoteIndex = (quoteIndex + 1) % quotes.length;
+          quoteEl.textContent = quotes[quoteIndex];
+          quoteEl.classList.remove('fade-out');
+        }, 1000);
+      }
+
+      setInterval(changeQuote, 12000);
+    });
+  </script>
+{% endblock %}
+

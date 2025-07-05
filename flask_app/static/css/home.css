@@ -249,6 +249,15 @@ ul {
     border-radius: 5px;
 }
 
+.quote {
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+}
+.fade-out {
+  opacity: 0;
+}
+
+
 
   
   
