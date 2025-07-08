@@ -5,6 +5,17 @@ from flask_app import app
 from flask_app.models.latest_model import LatestPost
 from flask_app.models.user_model import User
 from datetime import datetime
+from werkzeug.utils import secure_filename
+import os
+
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+UPLOAD_FOLDER = os.path.join(app.root_path, 'static', 'uploads')
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.',1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 
@@ -37,16 +48,30 @@ def new_latest():
 
 
 
-@app.route('/latest/create', methods=['POST'])
+@app.route('/latest/create', methods=['GET', 'POST'])
 def create_latest():
     """Handle the form submission and insert a new LatestPost."""
     if not is_admin():
         flash("Unauthorized!", "danger")
         return redirect('/')
+    
+    title = request.form['title']
+    body  = request.form['body']
+    created_at = datetime.now()
+    file = request.files.get('image')
+    image_filename = None
+    
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        save_path = os.path.join(UPLOAD_FOLDER, filename)
+        file.save(save_path)
+        image_filename = filename
+
     data = {
-        'title':      request.form['title'],
-        'body':       request.form['body'],
-        'created_at': datetime.now()
+        'title':          title,
+        'body':           body,
+        'image':          image_filename,
+        'created_at':     created_at
     }
     LatestPost.create(data)
     flash("New post published!", "success")

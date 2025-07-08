@@ -1,7 +1,4 @@
-{# templates/home.html #}
-<div class="block">
-
-
+<!-- templates/home.html -->
 {% extends "layout.html" %}
 
 {% block hero %}
@@ -19,18 +16,25 @@
 {% endblock %}
 
 {% block content %}
- 
-
   <section id="latest" class="my-5">
     <h3>Latest</h3>
     <div class="row g-4">
       {% for post in latest_posts %}
         <div class="col-md-4">
           <div class="card h-100 shadow-sm">
+            
+            {% if post.image %}
+              <img 
+                src="{{ url_for('static', filename='uploads/' ~ post.image) }}"
+                class="card-img-top"
+                alt="Post image">
+            {% endif %}
+            
             <div class="card-body">
               <h5 class="card-title">{{ post.title }}</h5>
               <p class="card-text">{{ post.body[:150] }}…</p>
             </div>
+            
             <div class="card-footer text-muted">
               {{ post.created_at.strftime('%b %d, %Y') }}
             </div>
@@ -46,9 +50,9 @@
     </div>
   {% endif %}
 {% endblock %}
+
 {% block scripts %}
   <script>
-    // ensure this runs after DOM is ready
     document.addEventListener('DOMContentLoaded', () => {
       const quotes = [
         "Let the other guys go",
@@ -73,6 +77,3 @@
     });
   </script>
 {% endblock %}
-
-</div>
-
