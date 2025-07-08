@@ -15,16 +15,22 @@ def index():
     return render_template('index.html')
 
 
+
 @app.route('/login')
 def login():
     
     return render_template('login.html')
 
+def is_admin():
+    return session.get('is_admin', False)
+
 @app.route('/home')
 def home():
     latest_posts = LatestPost.get_all()[:3]      # grab the 3 newest
     username     = session.get('username')
-    return render_template('home.html',latest_posts=latest_posts,username=username)
+    
+    
+    return render_template('home.html',latest_posts=latest_posts,username=username, is_admin=is_admin())
 
 
 @app.route('/register', methods=['POST'])

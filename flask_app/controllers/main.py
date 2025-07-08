@@ -16,29 +16,3 @@ def latest_home():
     # … any other data you pass …
     return render_template('home.html', latest_posts=latest_posts)
 
-#helper to see if the upload is correct
-def allowed_file(filename):
-    return(
-        '.' in filename
-        and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-    )
-    
-@app.route ('/upload', methods=['GET', 'POST'])
-def upload():
-    if request.method == 'POST':
-        file = request.files.get('image')
-        if not file or file.filename == '':
-            flash('No file selected')
-            return redirect('/home')
-        
-        if allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            save_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            file.save(save_path)
-            return f'Image saved to {filename}'
-        else:
-            flash('Invalid file type')
-            return redirect(request.url)
-
-    # GET request renders the upload form
-    return render_template('layout.html')

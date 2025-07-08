@@ -84,3 +84,12 @@ def create_latest():
 def debug_user_page(id):
     user = User.get_by_id({'id': id})
     return render_template('user_debug.html', user=user)
+
+@app.route('/latest/<int:id>/delete', methods=['POST'])
+def delete_latest(id):
+    if not is_admin():
+        flash('Unauthorized to delete posts', 'danger')
+        return redirect('/')
+    LatestPost.delete({'id':id})
+    flash('Post Deleted')
+    return redirect('/home')
