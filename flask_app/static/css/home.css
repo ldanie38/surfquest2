@@ -271,6 +271,31 @@ ul {
   opacity: 0;
 }
 
+.d-none { display: none !important; }
+
+
+.card-img-top {
+  max-height: 500px;/* adjust to taste */
+  width: 70%;              /* fill container’s width */
+  object-fit: cover;        /* crop overflow cleanly */
+  
+}
+
+.container {
+  max-width: 1000px;   /* adjust overall grid width */
+  margin: 0 auto;
+}
+
+ .card-text {
+          white-space: normal !important;
+          overflow: visible !important;
+          text-overflow: unset !important;
+          color: #333;           /* make sure text-color isn’t same as background */
+        }
+        
+
+
+
 
 
   

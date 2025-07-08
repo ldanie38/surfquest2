@@ -53,3 +53,24 @@
   
   // Rotate the quotes every  9 seconds
   setInterval(changeQuote, 12000);
+
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // find all read-toggle links
+    document.querySelectorAll('.read-toggle').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        
+        // locate the enclosing <p class="card-text">
+        const p = link.closest('.card-text');
+        p.querySelector('.short-text').classList.toggle('d-none');
+        p.querySelector('.ellipsis').classList.toggle('d-none');
+        p.querySelector('.full-text').classList.toggle('d-none');
+        
+        // swap the link text
+        link.textContent = link.textContent === 'Read more'
+          ? 'Read less'
+          : 'Read more';
+      });
+    });
+  });
