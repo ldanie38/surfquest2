@@ -284,14 +284,57 @@ ul {
 .container {
   max-width: 1000px;   /* adjust overall grid width */
   margin: 0 auto;
+  margin-bottom: 500px;
+}
+
+.card-title {
+  font-size: 1.4rem;    /* increase heading size (≈22px) */
 }
 
  .card-text {
           white-space: normal !important;
           overflow: visible !important;
           text-overflow: unset !important;
-          color: #333;           /* make sure text-color isn’t same as background */
+          color: #333; 
+          font-size: 1rem;      /* increase body text size (≈16px) */
+          line-height: 1.5;    /* make sure text-color isn’t same as background */
         }
+
+
+        .scroll-arrow {
+          position: fixed;
+          right: 20px;
+          width: 40px;
+          height: 40px;
+          border: none;
+          background: rgba(0,0,0,0.5);
+          color: white;
+          font-size: 1.2rem;
+          cursor: pointer;
+          z-index: 999;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 4px;
+          transition: opacity 0.3s;
+        }
+        
+        #scroll-up {
+          bottom: 70px;    /* sits above the down arrow */
+        }
+        
+        #scroll-down {
+          bottom: 20px;
+        }
+        
+        .scroll-arrow:hover {
+          background: rgba(0,0,0,0.8);
+        }
+        
+        .d-none {
+          display: none !important;
+        }
+        
         
 
 

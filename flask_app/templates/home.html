@@ -18,7 +18,7 @@
 {% block content %}
   <section id="latest" class="my-5">
     <div class="container">
-      <h3>Latest</h3>
+     
       <div class="row g-4 justify-content-center">
         {% for post in latest_posts %}
           <div class="col-md-4">
@@ -59,9 +59,42 @@
       </div>
     </div>
   </section>
+    <!-- Scroll arrows -->
+    <button id="scroll-up" class="scroll-arrow d-none">▲</button>
+    <button id="scroll-down" class="scroll-arrow">▼</button>
 {% endblock %}
 
 {% block scripts %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const upBtn   = document.getElementById('scroll-up');
+      const downBtn = document.getElementById('scroll-down');
+    
+      // Show/hide up button when not at top
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > window.innerHeight / 2) {
+          upBtn.classList.remove('d-none');
+        } else {
+          upBtn.classList.add('d-none');
+        }
+      });
+    
+      // Scroll up one viewport
+      upBtn.addEventListener('click', () => {
+        window.scrollBy({ top: -window.innerHeight, behavior: 'smooth' });
+      });
+    
+      // Scroll down one viewport
+      downBtn.addEventListener('click', () => {
+        window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
+      });
+    });
+    </script>
+    
+
+
+
   <!-- Quote rotation -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {

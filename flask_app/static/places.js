@@ -138,24 +138,10 @@ document.addEventListener("DOMContentLoaded", function () {
     console.error("Error: #searchForm not found in DOM");
   }
 
-  //////////////////////////////////////////////////
-  // "Back to Top" Functionality
-  //////////////////////////////////////////////////
-  window.addEventListener("scroll", function () {
-    const backToTop = document.getElementById("backToTop");
-    if (backToTop) {
-      backToTop.style.display = window.pageYOffset > 100 ? "block" : "none";
-    }
-  });
 
-  const backToTopButton = document.getElementById("backToTop");
-  if (backToTopButton) {
-    backToTopButton.addEventListener("click", function (e) {
-      e.preventDefault();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-  }
 
+
+  
   //////////////////////////////////////////////////
   // Refresh Button Handling
   //////////////////////////////////////////////////
@@ -172,4 +158,34 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log("Search refreshed.");
     });
   }
+});
+
+  //////////////////////////////////////////////////
+  // "Back to Top" Functionality
+  //////////////////////////////////////////////////
+
+// Scroll arrows logic
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("Arrow script loaded");   // sanity check
+  const upBtn   = document.getElementById("scroll-up");
+  const downBtn = document.getElementById("scroll-down");
+  if (!upBtn || !downBtn) {
+    console.error("Scroll buttons not found in DOM");
+    return;
+  }
+
+  // Show/hide the up arrow after you scroll half a screen
+  window.addEventListener("scroll", () => {
+    upBtn.classList.toggle("d-none", window.scrollY < window.innerHeight / 2);
+  });
+
+  // Jump up
+  upBtn.addEventListener("click", () => {
+    window.scrollBy({ top: -window.innerHeight, behavior: "smooth" });
+  });
+
+  // Jump down
+  downBtn.addEventListener("click", () => {
+    window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
+  });
 });
