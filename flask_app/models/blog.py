@@ -10,14 +10,14 @@ class BlogPost:
         self.likes = data['likes']
         self.updated_at = data['updated_at']
         # Use get() so it doesn’t throw an error if image_url isn’t provided
-        self.image_url = data.get('image_url')
+        self.image      = data.get('image')
         
     db='project'
 
     @classmethod
     def save(cls, data):
-            query = '''INSERT INTO blog_posts (title, content, author, image_url)
-                    VALUES (%(title)s, %(content)s, %(author)s, %(image_url)s);'''
+            query = '''INSERT INTO blog_posts (title, content, author, image)
+                    VALUES (%(title)s, %(content)s, %(author)s, %(image)s);'''
             return connectToMySQL(cls.db).query_db(query, data)
         
     @classmethod

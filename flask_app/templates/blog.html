@@ -58,29 +58,61 @@
   <div class="container">
     <section class="create_post">
       {% if username %}
-        <form action="/blog/create" method="POST" enctype="multipart/form-data">
-          <p class="welcome"><h3>Share Your Story {{ username|title }}</h3></p>
+        <form 
+          action="{{ url_for('create_blog') }}" 
+          method="POST" 
+          enctype="multipart/form-data"
+        >
+          <p class="welcome">
+            <h3>Share Your Story {{ username|title }}</h3>
+          </p>
+    
           <label for="title">Big Kahuna:</label>
-          <input type="text" id="title" name="title" required>
-          
+          <input 
+            type="text" 
+            id="title" 
+            name="title" 
+            required
+          >
+    
           <label for="content">Swell Details:</label>
-          <textarea id="content" name="content" rows="5" required maxlength="5000"></textarea>
-          
+          <textarea 
+            id="content" 
+            name="content" 
+            rows="5" 
+            required 
+            maxlength="5000"
+          ></textarea>
+    
           <!-- File input for the blog post image -->
-          <input type="file" name="post_image" accept="image/*">
-          
+          <label for="post_image">Upload a Wave Photo:</label>
+          <input 
+            type="file" 
+            id="post_image" 
+            name="post_image" 
+            accept="image/*"
+          >
+    
           <button type="submit">DropIn</button>
         </form>
+      {% else %}
+        <p>Please <a href="{{ url_for('login') }}">log in</a> to share your story.</p>
       {% endif %}
-      
+    
       <div class="create_post_image">
-        <img id="surfImage" src="/static/img/bad_ass.jpg" alt="Surfboard on the beach">
+        <img 
+          id="surfImage" 
+          src="/static/img/bad_ass.jpg" 
+          alt="Surfboard on the beach"
+        >
       </div>
+    
       <div class="logout">
-        <a href="/home">Back to Home</a> |
-        <a href="/logout">Logout</a>
+        <a href="{{ url_for('blog') }}">Back to Home</a> |
+        <a href="{{ url_for('logout') }}">Logout</a>
       </div>
     </section>
+    
 
     <hr>
 
@@ -92,9 +124,16 @@
             <p>{{ post.content }}</p>
             
             {# Display the blog post image if available #}
-            {% if post.image_url %}
-              <img src="{{ post.image_url }}" alt="Blog Post Image" style="max-width: 300px;">
-            {% endif %}
+
+            {% if post.image %}
+            <img
+              src="{{ url_for('static', filename='uploads/' ~ post.image) }}"
+              class="card-img-top card-img-small"
+              alt="Post image for {{ post.title }}"
+            >
+          {% endif %}
+          
+
             
             <p>
               <strong>By:</strong> {{ post.author_username }} |

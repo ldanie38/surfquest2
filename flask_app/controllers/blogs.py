@@ -8,10 +8,17 @@ from datetime import datetime
 from werkzeug.utils import secure_filename
 import os
 from flask import url_for
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+UPLOAD_FOLDER = os.path.join(app.root_path, 'static', 'uploads')
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 
-
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.',1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/blog')
 def blog():
@@ -60,31 +67,50 @@ def create_blog():
     # Validate title and content.
     title = request.form.get("title", "").strip()
     content = request.form.get("content", "").strip()
-
+    filename = request.files.get('image_url')
+    image_file = None
     if not title or not content:
         flash("Title and content cannot be empty.")
-        return redirect('/blog/new')
+        return redirect(url_for('/blog/new'))
 
     # Prepare the data dictionary.
     data = {
         "title": title,
         "content": content,
-        "author": session["user_id"]  # This should align with your BlogPost model.
+        "author": session["user_id"],
+        "image_url": None # This should align with your BlogPost model.
     }
     
     # Check for uploaded blog post image.
     image_file = request.files.get("post_image")
-    image_url = None
     if image_file and image_file.filename:
         filename = secure_filename(image_file.filename)
-        file_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
-        image_file.save(file_path)
-        image_url = url_for('static', filename=f"uploads/{filename}")
-        data["image_url"] = image_url  # Add the image URL to your data for saving.
+        save_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+        image_file.save(save_path)
+        data['image'] = filename         # store filename, not full URL
+    else:
+        data['image'] = None
+    BlogPost.save(data)
+
+
+
+
 
     # Save the blog post (ensure your BlogPost model and save method are updated to handle image_url)
     BlogPost.save(data)
-    return redirect('/blog')
+    print("🔥 create_blog() called")
+    print("form data:", request.form)
+    print("files:", request.files)
+    try:
+        BlogPost.save(data)
+        flash("Post created!", "success")
+    except Exception as e:
+        print("SQL error:", e)
+        flash("Couldn’t save post.", "danger")
+
+    
+    return redirect(url_for('blog'))
 
 
 

@@ -27,6 +27,16 @@ def inject_current_user():
 
 
 
+# 1. Point to static/uploads
+UPLOAD_FOLDER = os.path.join(app.root_path, 'static', 'uploads')
+
+# 2. Make sure the folder exists on disk
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+# 3. Store it in your config for easy access
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+
 
 
 if __name__ == "__main__":
