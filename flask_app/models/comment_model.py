@@ -15,8 +15,8 @@ class Comment:
     @classmethod
     def save(cls, data):
         query = """
-        INSERT INTO comments (content, user_id, blog_post_id, image_url)
-        VALUES (%(content)s, %(user_id)s, %(blog_post_id)s, %(image_url)s);
+        INSERT INTO comments (content, user_id, blog_post_id,parent_comment_id, image_url)
+        VALUES (%(content)s, %(user_id)s, %(blog_post_id)s,%(parent_comment_id)s, %(image_url)s);
         """
         return connectToMySQL("project").query_db(query, data)
 

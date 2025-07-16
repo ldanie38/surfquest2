@@ -1,105 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Web Page</title>
-        <!-- Favicon for most browsers -->
-    <link rel="icon" type="image/png" sizes="32x32" href="static/img/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="static/img/favicon-16x16.png">
-    <link rel="shortcut icon" href="/favicon.ico">
-    <!-- For Apple devices -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <!-- Theme color for Chrome, Firefox OS and Opera -->
-    <meta name="theme-color" content="#ffffff">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="static/css/index.css">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{{ post.title }} – SurfQuest</title>
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/index.css') }}"
+  >
 </head>
 <body>
-    <main>
+  <main>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class="flashes">
+          {% for msg in messages %}
+            <li>{{ msg }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
 
-        {% with messages = get_flashed_messages() %}     <!-- declare a variable called messages -->
-        {% if messages %}                            <!-- check if there are any messages -->
-            {% for message in messages %}            <!-- loop through the messages -->
-                <p>{{message}}</p>                   <!-- display each message in a paragraph tag -->
-            {% endfor %}
-         {% endif %}
-      {% endwith %}
+    <article class="blog-post">
+      <h1>{{ post.title }}</h1>
+      <p>by {{ post.author_username }}</p>
+      <div>{{ post.body | safe }}</div>
+    </article>
 
-     <section class="form-container">
-            <header>
-                <h1 class="title">SurfQuest</h1>
-                
-            </header>
-            <h2>Comments</h2>
-            <div class="comments-section">
-                {% for comment in comments %}
-                    {% if not comment.parent_comment_id %}
-                        <div class="comment">
-                            <p><strong>{{ comment.user_id }}</strong>: {{ comment.content }}</p>
-                            <button class="reply-button" data-comment-id="{{ comment.id }}">💬 Reply</button>
-            
-                            <!-- Reply Form (Hidden by default) -->
-                            <div id="reply-form-{{ comment.id }}" class="reply-form" style="display: none;">
-                                <form action="/comment/reply" method="POST">
-                                    <input type="hidden" name="post_id" value="{{ post.id }}">
-                                    <input type="hidden" name="parent_comment_id" value="{{ comment.id }}">
-                                    <textarea name="content" rows="2" placeholder="Reply..."></textarea>
-                                    <button type="submit">Post Reply</button>
-                                </form>
-                            </div>
-            
-                            <!-- Replies Section -->
-                            <div class="replies">
-                                {% for reply in comments %}
-                                    {% if reply.parent_comment_id == comment.id %}
-                                        <div class="reply">
-                                            <p><strong>{{ reply.user_id }}</strong>: {{ reply.content }}</p>
-                                        </div>
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-            
+    <section class="comments-section">
+      <h2>Comments</h2>
 
-            </div>
-            <script>
-                document.addEventListener("DOMContentLoaded", function() {
-                    document.querySelectorAll(".reply-button").forEach(button => {
-                        button.addEventListener("click", function() {
-                            const commentId = this.dataset.commentId;
-                            const replyForm = document.getElementById(`reply-form-${commentId}`);
-                
-                            if (replyForm.style.display === "none") {
-                                replyForm.style.display = "block";
-                            } else {
-                                replyForm.style.display = "none";
-                            }
-                        });
-                    });
-                });
-                
+      <!-- Top-level comment form -->
+      <form
+        action="{{ url_for('add_comment', post_id=post.id) }}"
+        method="POST"
+        enctype="multipart/form-data"
+        class="comment-form"
+      >
+        <textarea
+          name="content"
+          rows="3"
+          placeholder="Write your comment…"
+          required
+        ></textarea>
+        <input
+          type="file"
+          name="comment_image"
+          accept="image/*"
+        >
+        <button type="submit">Post Comment</button>
+      </form>
 
-            </script>
-            
-            
-                
-          
-    </main>
+      <div class="comments-list">
+        {% for comment in comments %}
+          {% if not comment.parent_comment_id %}
+            <div class="comment" id="comment-{{ comment.id }}">
+              <p>
+                <strong>{{ comment.username }}</strong>:
+                {{ comment.content }}
+              </p>
 
-        <footer>
-            <p>&copy; 2025 SurfQuest</p>
-        </footer>
-    
-</body>
-</html>
+              {% if comment.image_url %}
+                <img
+                  src="{{ comment.image_url }}"
+                  alt="Comment image"
+                  style="max-width:200px; margin:.5em 0;"
+                >
+              {% endif %}
+
+              <!-- Reply toggle -->
+              <button
+                type="button"
+                class="reply-button"
+                data-comment-id="{{ comment.id }}"
+              >💬 Reply</button>
+
+              <!-- Nested reply form (initially hidden) -->
+              <div
+                id="reply-form-{{ comment.id }}"
+                class="reply-form-container"
+                style="display: none; margin-top:.5em;"
+              >
+                <form
+                  action="{{ url_for('add_comment', post_id=post.id) }}"
+                  method="POST"
+                  enctype="multipart/form-data"
+                  class="reply-form"
+                >
+                  <input
+                    type="hidden"
+                    name="parent_comment_id"
+                    value="{{ comment.id }}"
+                  >
+                  <textarea
+                    name="content"
+                    rows="2"
+                    placeholder="Your reply…"
+                    required
+                  ></textarea>
+                  <input
+                    type="file"
+                    name="reply_image"
+                    accept="image/*"
+                  >
+                  <button type="submit">Post Reply</button>
+                </form>
+              </div>
+
+              <div class="replies" style="margin-left: 2em;">
+                {% for reply in comments %}
+                  {% if reply.parent_comment_id == comment.id %}
+                    <div class="reply" id="comment-{{ reply.id }}">
+                      <p>
+                        <strong>{{ reply.username }}</strong>:
+                        {{ reply.content }}
+                      </p>
+                      {% if reply.image_url %}
+                        <img
+                          src="{{ reply.image_url }}"
+                          alt="Reply image"

@@ -16,12 +16,13 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.',1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/blog')
-def blog():
+def blog_index():
     """Display all blog posts with likes, comments, and logged-in user."""
     
     posts = BlogPost.get_all()  # Fetch all blog posts

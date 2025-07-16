@@ -23,3 +23,5 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 # 3. Store it in your config for easy access
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+

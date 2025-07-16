@@ -241,4 +241,16 @@ document.querySelectorAll("form.reply-form").forEach(form => {
       });
     }
   });
+
+
+
+document.querySelectorAll('.reply-button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const id = btn.dataset.commentId;
+    const form = document.getElementById(`reply-form-${id}`);
+    form.style.display = form.style.display === 'none' ? 'block' : 'none';
+  });
+});
+
+
   

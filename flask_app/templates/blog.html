@@ -12,42 +12,78 @@
 </head>
 <body>
   {# Define a macro to recursively render nested comments, with "post" passed in #}
-  {% macro render_comments(comments, post) %}
-    <ul>
-      {% for comment in comments %}
-        <li>
-          <p><strong>{{ comment.username }}</strong>: {{ comment.content }}</p>
-          
-          {# Display the comment image if available #}
-          {% if comment.image_url %}
-            <img src="{{ comment.image_url }}" alt="Comment Image" style="max-width: 200px;">
-          {% endif %}
-          
-          <!-- Optional reply button -->
-          <button class="reply-button" data-comment-id="{{ comment.id }}">Reply</button>
-          
-          <!-- Reply form with file upload support -->
-          <div class="reply-form-container" id="reply-form-{{ comment.id }}" style="display: none;">
-            <form class="reply-form" data-parent-comment-id="{{ comment.id }}" action="/blog/{{ post.id }}/comment" method="POST" enctype="multipart/form-data">
-              <input type="hidden" name="post_id" value="{{ post.id }}">
-              <input type="hidden" name="parent_comment_id" value="{{ comment.id }}"> <!-- Make sure this is included -->
-              <textarea name="content" rows="2" placeholder="Your reply..." required></textarea>
-              <input type="file" name="reply_image" accept="image/*">
-              <button type="submit">Submit Reply</button>
-            </form>
-            
-          </div>
-          
-          <!-- Render nested replies if any -->
-          <div id="replies-container-{{ comment.id }}">
-            {% if comment.children %}
-              {{ render_comments(comment.children, post) }}
-            {% endif %}
-          </div>
-        </li>
-      {% endfor %}
-    </ul>
-  {% endmacro %}
+{# templates/_comments_macro.html #}
+{% macro render_comments(comments, post) %}
+  <ul>
+    {% for comment in comments %}
+      <li>
+        <p>
+          <strong>{{ comment.username }}</strong>:
+          {{ comment.content }}
+        </p>
+
+        {# Image, if uploaded #}
+        {% if comment.image_url %}
+          <img
+            src="{{ comment.image_url }}"
+            alt="Comment Image"
+            style="max-width:200px; margin:.5em 0;"
+          >
+        {% endif %}
+
+        {# Reply toggle #}
+        <button
+          type="button"
+          class="reply-button"
+          data-comment-id="{{ comment.id }}"
+        >
+          Reply
+        </button>
+
+        {# Hidden reply form #}
+        <div
+          class="reply-form-container"
+          id="reply-form-{{ comment.id }}"
+          style="display:none; margin-top:.5em;"
+        >
+          <form
+            class="reply-form"
+            action="{{ url_for('add_comment', post_id=post.id) }}"
+            method="POST"
+            enctype="multipart/form-data"
+          >
+            <input
+              type="hidden"
+              name="parent_comment_id"
+              value="{{ comment.id }}"
+            >
+            <textarea
+              name="content"
+              rows="2"
+              placeholder="Your reply…"
+              required
+            ></textarea>
+
+            {# Make sure this name matches your route’s .files lookup #}
+            <input
+              type="file"
+              name="reply_image"
+              accept="image/*"
+            >
+
+            <button type="submit">Submit Reply</button>
+          </form>
+        </div>
+
+        {# Recurse into children #}
+        {% if comment.children %}
+          {{ render_comments(comment.children, post) }}
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+{% endmacro %}
+
 
   <header>
     <div class="head">
@@ -171,6 +207,8 @@
                 
                 <!-- File input for the comment image -->
                 <input type="file" name="comment_image" accept="image/*">
+
+
                 
                 <button type="submit">Post Comment</button>
               </form>
