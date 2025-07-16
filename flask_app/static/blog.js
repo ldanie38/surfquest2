@@ -252,5 +252,22 @@ document.querySelectorAll('.reply-button').forEach(btn => {
   });
 });
 
+document.querySelectorAll('.comment-form').forEach(form => {
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: formData
+    });
+    if (res.redirected) {
+      window.location = res.url;
+    } else {
+      // handle JSON response…
+    }
+  });
+});
+
+
 
   
