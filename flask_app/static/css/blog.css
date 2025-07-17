@@ -100,16 +100,16 @@ p{
 
 .create_post_image img {
     width: 100%; /* Makes it smaller while staying responsive */
-    max-width: 400px; /* Prevents it from being too large */
+    max-width: 600px; /* Prevents it from being too large */
     height: auto; /* Maintains aspect ratio */
-    border-radius: 10px; /* Smooth corners for a clean look */
+    border-radius: 5px; /* Smooth corners for a clean look */
     display: block;
     margin: 0 auto;
-    margin-top: 80px; /* Centers the image horizontally */
+    margin-top: 10px; /* Centers the image horizontally */
     object-fit: cover;
     transition: opacity 4s ease; /* Transition now takes 2 seconds */
     opacity: 1;
-    margin-left: 60px;
+    margin-left: 88px;
 }
 
 
@@ -234,7 +234,7 @@ form {
   }
 
   .logout{
-    margin-left:65px;
+    margin-left:90px;
     margin-top: 8px;
   }
   
