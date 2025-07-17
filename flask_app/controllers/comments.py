@@ -83,6 +83,7 @@ def blog():
 # AJAX & Form comment API
 # -----------------------
 
+# in comment_controller.py
 @app.route('/blog/<int:post_id>/comment', methods=['POST'])
 def add_comment(post_id):
     if 'user_id' not in session:
@@ -138,6 +139,8 @@ def add_comment(post_id):
 
 
     return redirect(url_for('blog', id=post_id))
+   
+
 
 # ---------------------------
 # Classic form‐only comment
@@ -167,6 +170,27 @@ def create_comment():
     })
     return redirect(url_for('blog', id=post_id))
 
+# ----------------
+# Single‐post page
+# ----------------
 
+@app.route('/blog/<int:id>')
+def show_blog(id):
+    post = BlogPost.get_by_id({"id": id})
+    if not post:
+        flash("Post not found", "warning")
+        return redirect(url_for('blog'))
+
+    author = User.get_by_id({"id": post.author})
+    post.author_username = author.username if author else "Unknown"
+
+    raw_comments    = Comment.get_by_post({"blog_post_id": post.id})
+    nested_comments = nest_comments(raw_comments)
+
+    return render_template(
+        'blog.html',
+        post=post,
+        comments=nested_comments
+    )
     
  

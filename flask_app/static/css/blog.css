@@ -363,10 +363,17 @@ input[type="file"]::file-selector-button:hover {
 
 }
 
-.post_show img {
-  max-width: 100%;
-  max-height: 300px;
-  height: auto;
+.post_show img,
+.comment-image img {
+  max-width: 350px; /* or whatever your ideal width is */
+  margin: 0 auto;
+
+ 
+}
+
+
+.post_show img, .comment-image img {
+  
   object-fit: cover;
   display: block;
   margin: 0 auto;

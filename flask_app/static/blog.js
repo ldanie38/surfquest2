@@ -252,6 +252,8 @@ document.querySelectorAll('.reply-button').forEach(btn => {
   });
 });
 
+
+
 document.querySelectorAll('.comment-form').forEach(form => {
   form.addEventListener('submit', async e => {
     e.preventDefault();
@@ -267,7 +269,3 @@ document.querySelectorAll('.comment-form').forEach(form => {
     }
   });
 });
-
-
-
-  

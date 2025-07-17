@@ -198,25 +198,41 @@
             <div id="comments-container-{{ post.id }}" style="display: none;">
               {{ render_comments(post_comments[post.id], post) }}
             </div>
+          
             <!-- Comment Form -->
             <div id="comment-form-{{ post.id }}" class="comment-form-container" style="display: none;">
               <form class="comment-form" data-post-id="{{ post.id }}" action="/blog/{{ post.id }}/comment" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="post_id" value="{{ post.id }}">
                 <label for="comment-content-{{ post.id }}"></label>
                 <textarea id="comment-content-{{ post.id }}" name="content" rows="3" placeholder="Write your comment..." required></textarea>
-                
+          
                 <!-- File input for the comment image -->
                 <input type="file" name="comment_image" accept="image/*">
-
-
-                
+          
                 <button type="submit">Post Comment</button>
               </form>
             </div>
+          
+            <!-- Display existing comment image if it exists -->
+            {% for comment in post_comments[post.id] %}
+            <div class="comment" id="comment-{{ comment.id }}">
+              <p>{{ comment.content }}</p>
+          
+              {% if comment.image_url %}
+                <div class="comment-image">
+                  <img
+                    src="{{ url_for('static', filename='uploads/' ~ comment.image_url) }}"
+                    alt="Comment image"
+                  >
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+            </div>
           </div>
-        </article>
-        <hr>
-      {% endfor %}
+          </article>
+            <hr>
+           {% endfor %}
     </section>
   </div>
 
