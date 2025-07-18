@@ -221,27 +221,29 @@ document.querySelectorAll("form.reply-form").forEach(form => {
     }
     setInterval(changeImage, 8000);
   
-    // ============================
-    // "Back to Top" Button Handler
-    // ============================
-    window.addEventListener('scroll', function() {
-      const backToTop = document.getElementById('backToTop');
-      if (window.pageYOffset > 100) {
-        backToTop.style.display = 'block';
-      } else {
-        backToTop.style.display = 'none';
-      }
-    });
-  
-    const backToTopButton = document.getElementById("backToTop");
-    if (backToTopButton) {
-      backToTopButton.addEventListener("click", function(e) {
-        e.preventDefault();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.addEventListener('DOMContentLoaded', () => {
+      const upBtn   = document.getElementById('scroll-up');
+      const downBtn = document.getElementById('scroll-down');
+    
+      // Show/hide up button when not at top
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > window.innerHeight / 2) {
+          upBtn.classList.remove('d-none');
+        } else {
+          upBtn.classList.add('d-none');
+        }
       });
-    }
-  });
-
+    
+      // Scroll up one viewport
+      upBtn.addEventListener('click', () => {
+        window.scrollBy({ top: -window.innerHeight, behavior: 'smooth' });
+      });
+    
+      // Scroll down one viewport
+      downBtn.addEventListener('click', () => {
+        window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
+      });
+    });
 
 
 document.querySelectorAll('.reply-button').forEach(btn => {
