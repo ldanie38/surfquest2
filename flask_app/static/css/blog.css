@@ -75,6 +75,8 @@ p{
 }
 
 .create_post {
+    display: flex;
+    flex-direction: column;
     align-self: flex-start;
     flex-grow: 2;
     width: 90%; 
@@ -99,17 +101,18 @@ p{
 }
 
 .create_post_image img {
-    width: 100%; /* Makes it smaller while staying responsive */
-    max-width: 400px; /* Prevents it from being too large */
+    width: 120%; /* Makes it smaller while staying responsive */
+    max-width: 600px;
+     /* Prevents it from being too large */
     height: auto; /* Maintains aspect ratio */
-    border-radius: 10px; /* Smooth corners for a clean look */
+    border-radius: 5px; /* Smooth corners for a clean look */
     display: block;
     margin: 0 auto;
-    margin-top: 80px; /* Centers the image horizontally */
+    margin-bottom: 95px; /* Centers the image horizontally */
     object-fit: cover;
     transition: opacity 4s ease; /* Transition now takes 2 seconds */
     opacity: 1;
-    margin-left: 60px;
+    margin-left: 90px;
 }
 
 
@@ -153,6 +156,7 @@ p{
 form {
     display: flex;
     flex-direction: column;
+    justify-content:center;
     width: 100%;
   }
   
@@ -197,7 +201,7 @@ form {
     font-size: 1em; 
     padding: 8px;
     margin-top: 5px;
-    margin-left: 50px;
+    margin-right: 100px;
 
 
 
@@ -218,8 +222,10 @@ form {
     font-weight: 400;
     font-style: normal;
     font-size: 1em; 
+
     
   }
+
 
  
   
@@ -234,8 +240,9 @@ form {
   }
 
   .logout{
-    margin-left:65px;
-    margin-top: 8px;
+    margin-left:90px;
+    margin: auto;
+
   }
   
 
