@@ -80,6 +80,7 @@ h1 {
 }
 
 
+
 :root {
     --title-font: "Bungee Spice", sans-serif;
     --body-font: "Nunito", sans-serif;
@@ -337,6 +338,15 @@ ul {
         
         
 
+/* Pull the #latest container upward under the hero video */
+#latest .container {
+  /* adjust this value until it sits right under your video */
+  margin-top: -130px;     
+}
+
+.quote-overlay{
+  margin-top: -70px;
+}
 
 
 
